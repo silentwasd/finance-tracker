@@ -24,4 +24,10 @@ Route::get('/incomes', [IncomeController::class, 'index']);
 
 Route::get('/expenses', [ExpenseController::class, 'index']);
 
-Route::get('/joint', [JointController::class, 'index']);
+Route::prefix('joint')->group(function () {
+
+    Route::get('', [JointController::class, 'index']);
+
+    Route::get('balance', [JointController::class, 'balance']);
+
+});
