@@ -19,7 +19,7 @@
                             <tr>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->value }}</td>
-                                <td>{{ $item->completed_at }}</td>
+                                <td>{{ $item->completed_at->format('d.m.Y') }}</td>
                             </tr>
                         @endforeach
                     </tbody>
