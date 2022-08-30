@@ -27,19 +27,23 @@ class JointController extends Controller
         $incomes = Income::orderBy('completed_at')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
+            ->with('incomeType')
             ->get();
 
         $expenses = Expense::orderBy('completed_at')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
+            ->with('expenseType')
             ->get();
 
         $items = $incomes->map(fn (Income $income) => [
-            'type' => 'income',
+            'operationType' => 'income',
+            'recordType' => $income->incomeType->name ?? null,
             'model' => $income
         ])->concat(
             $expenses->map(fn (Expense $expense) => [
-                'type' => 'expense',
+                'operationType' => 'expense',
+                'recordType' => $expense->expenseType->name ?? null,
                 'model' => $expense
             ])->all()
         )->sortBy(fn (array $item) => $item['model']->completed_at);
