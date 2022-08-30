@@ -30,7 +30,15 @@ Route::prefix('incomes')->name('incomes.')->group(function () {
 
 });
 
-Route::get('/expenses', [ExpenseController::class, 'index']);
+Route::prefix('expenses')->name('expenses.')->group(function () {
+
+    Route::get('', [ExpenseController::class, 'index']);
+
+    Route::get('stats', [ExpenseController::class, 'stats']);
+
+    Route::get('stats/{month}', [ExpenseController::class, 'statsByMonth'])->name('stats');
+
+});
 
 Route::prefix('joint')->group(function () {
 

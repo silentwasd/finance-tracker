@@ -25,7 +25,7 @@ class IncomeController extends Controller
 
     public function stats()
     {
-        return redirect()->route('incomes.stats', Str::substr(Str::lower(now()->monthName), 0, 3));
+        return redirect()->route('incomes.stats', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
     }
 
     public function statsByMonth(Month $month)
