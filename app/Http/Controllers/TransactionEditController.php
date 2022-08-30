@@ -39,6 +39,11 @@ class TransactionEditController extends Controller
     {
         $transaction->delete();
 
-        return redirect()->route('incomes.index.default');
+        return redirect()->route(
+            match ($transaction->transaction_type) {
+                TransactionType::Income->value => 'incomes.index.default',
+                TransactionType::Expense->value => 'expenses.index.default'
+            }
+        );
     }
 }
