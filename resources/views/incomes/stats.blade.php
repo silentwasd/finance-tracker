@@ -1,7 +1,27 @@
 @extends('layout', ['title' => 'Статистика доходов'])
 
 @section('body')
-    <div class="container">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-auto">
+                <a class="btn btn-primary {{ $months['prev'] == null ? 'disabled' : '' }}"
+                   href="{{ $months['prev'] ? route('incomes.stats', $months['prev']) : '#' }}">
+                    Предыдущий
+                </a>
+            </div>
+
+            <div class="col text-center">
+                <h3>{{ Str::ucfirst(__("months.{$months['cur']}")) }}</h3>
+            </div>
+
+            <div class="col-auto">
+                <a class="btn btn-primary {{ $months['next'] == null ? 'disabled' : '' }}"
+                   href="{{ $months['next'] ? route('incomes.stats', $months['next']) : '#' }}">
+                    Следующий
+                </a>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col">
 

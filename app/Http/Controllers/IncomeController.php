@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Income;
 use App\Structures\Money;
 use App\Structures\Month;
+use DateTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use UnitEnum;
 
 class IncomeController extends Controller
 {
@@ -28,12 +30,15 @@ class IncomeController extends Controller
 
     public function statsByMonth(Month $month)
     {
+        $firstDay = new Carbon(new DateTime("first day of $month->name"));
+        $lastDay = new Carbon(new DateTime("last day of $month->name"));
+
         $incomes = DB::table('incomes')
             ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
             ->groupBy('income_type')
             ->join('income_types', 'income_type', '=', 'income_types.id')
-            ->where('completed_at', '>=', (new Carbon(new \DateTime("first day of $month->name"))))
-            ->where('completed_at', '<=', (new Carbon(new \DateTime("last day of $month->name"))))
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
             ->get();
 
         $result = $incomes->map(fn (object $income) => [
@@ -56,8 +61,16 @@ class IncomeController extends Controller
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
 
+        $months = collect(Month::cases());
+        $curMonthKey = $months->search(fn (UnitEnum $unit) => $unit->name == $month->name);
+
         return view('incomes.stats')
             ->with('result', $result)
-            ->with('total', $total);
+            ->with('total', $total)
+            ->with('months', [
+                'cur' => $month->value,
+                'next' => $curMonthKey + 1 < $months->count() ? $months[$curMonthKey + 1]->value : null,
+                'prev' => $curMonthKey - 1 >= 0 ? $months[$curMonthKey - 1]->value : null,
+            ]);
     }
 }
