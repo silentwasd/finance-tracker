@@ -9,6 +9,7 @@
                     <thead>
                         <tr>
                             <td>Наименование</td>
+                            <td>Тип</td>
                             <td>Значение</td>
                             <td>Дата</td>
                         </tr>
@@ -18,6 +19,7 @@
                         @foreach ($items as $item)
                             <tr>
                                 <td>{{ $item->name }}</td>
+                                <td>{{ $item->incomeType->name ?? '–' }}</td>
                                 <td>{{ $item->value }}</td>
                                 <td>{{ $item->completed_at->format('d.m.Y') }}</td>
                             </tr>

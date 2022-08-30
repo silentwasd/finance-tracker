@@ -8,7 +8,9 @@ class IncomeController extends Controller
 {
     public function index()
     {
-        $items = Income::orderBy('completed_at')->get();
+        $items = Income::orderBy('completed_at')
+            ->with('incomeType')
+            ->get();
 
         return view('incomes')
             ->with('items', $items);
