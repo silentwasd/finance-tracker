@@ -31,25 +31,7 @@
 @endsection
 
 @section('main')
-    <div class="row">
-        <div class="col-auto">
-            <a class="btn btn-primary {{ $months['prev'] == null ? 'disabled' : '' }}"
-               href="{{ $months['prev'] ? route('expenses.stats', $months['prev']) : '#' }}">
-                Предыдущий
-            </a>
-        </div>
-
-        <div class="col text-center">
-            <h3>{{ Str::ucfirst(__("months.{$months['cur']}")) }}</h3>
-        </div>
-
-        <div class="col-auto">
-            <a class="btn btn-primary {{ $months['next'] == null ? 'disabled' : '' }}"
-               href="{{ $months['next'] ? route('expenses.stats', $months['next']) : '#' }}">
-                Следующий
-            </a>
-        </div>
-    </div>
+    <x-month-selector :month="$month"></x-month-selector>
 
     <div class="row">
         <div class="col">

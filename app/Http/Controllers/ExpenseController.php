@@ -10,7 +10,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use UnitEnum;
 
 class ExpenseController extends Controller
 {
@@ -34,19 +33,12 @@ class ExpenseController extends Controller
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
 
-        $months = collect(Month::cases());
-        $curMonthKey = $months->search(fn (UnitEnum $unit) => $unit->name == $month->name);
-
         return view('expenses.stats')
             ->with('timeAndType', $this->groupedByCompletedTimeAndType($firstDay, $lastDay))
             ->with('type', $this->groupedByType($firstDay, $lastDay))
             ->with('name', $this->groupedByName($firstDay, $lastDay))
             ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
-            ->with('months', [
-                'cur' => $month->value,
-                'next' => $curMonthKey + 1 < $months->count() ? $months[$curMonthKey + 1]->value : null,
-                'prev' => $curMonthKey - 1 >= 0 ? $months[$curMonthKey - 1]->value : null,
-            ]);
+            ->with('month', $month);
     }
 
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection
