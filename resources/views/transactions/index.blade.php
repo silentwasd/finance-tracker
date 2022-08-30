@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'Расходы'])
+@extends('layouts.main', ['title' => $title ?? 'Транзакции'])
 
 @section('main')
     <div class="mb-3">
