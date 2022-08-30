@@ -22,9 +22,9 @@ Route::get('/', function () {
 
 Route::prefix('incomes')->name('incomes.')->group(function () {
 
-    Route::get('', [IncomeController::class, 'index']);
+    Route::get('', [IncomeController::class, 'index'])->name('index');
 
-    Route::get('stats', [IncomeController::class, 'stats']);
+    Route::get('stats', [IncomeController::class, 'stats'])->name('stats.default');
 
     Route::get('stats/{month}', [IncomeController::class, 'statsByMonth'])->name('stats');
 
@@ -32,18 +32,18 @@ Route::prefix('incomes')->name('incomes.')->group(function () {
 
 Route::prefix('expenses')->name('expenses.')->group(function () {
 
-    Route::get('', [ExpenseController::class, 'index']);
+    Route::get('', [ExpenseController::class, 'index'])->name('index');
 
-    Route::get('stats', [ExpenseController::class, 'stats']);
+    Route::get('stats', [ExpenseController::class, 'stats'])->name('stats.default');
 
     Route::get('stats/{month}', [ExpenseController::class, 'statsByMonth'])->name('stats');
 
 });
 
-Route::prefix('joint')->group(function () {
+Route::prefix('joint')->name('joint.')->group(function () {
 
-    Route::get('', [JointController::class, 'index']);
+    Route::get('', [JointController::class, 'index'])->name('index');
 
-    Route::get('balance', [JointController::class, 'balance']);
+    Route::get('balance', [JointController::class, 'balance'])->name('balance');
 
 });
