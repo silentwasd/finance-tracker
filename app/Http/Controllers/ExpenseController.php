@@ -48,7 +48,8 @@ class ExpenseController extends Controller
         $curMonthKey = $months->search(fn (UnitEnum $unit) => $unit->name == $month->name);
 
         return view('expenses.stats')
-            ->with('result', $this->groupedByType($firstDay, $lastDay))
+            ->with('timeAndType', $this->groupedByCompletedTimeAndType($firstDay, $lastDay))
+            ->with('type', $this->groupedByType($firstDay, $lastDay))
             ->with('total', $total)
             ->with('months', [
                 'cur' => $month->value,
@@ -60,20 +61,20 @@ class ExpenseController extends Controller
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection
     {
         $expenses = DB::table('expenses')
-            ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, expense_types.name as expense_type')
+            ->selectRaw('sum(value) as sum, min(value) as min, max(value) as max, count(value) as count, expense_types.name as expense_type')
             ->groupBy('expense_type')
             ->join('expense_types', 'expense_type', '=', 'expense_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
-            ->orderByDesc('value')
+            ->orderByDesc('sum')
             ->get();
 
         return $expenses->map(fn (object $expense) => [
-            'value' => new Money($expense->value),
             'type' => $expense->expense_type,
+            'sum' => new Money($expense->sum),
             'min' => new Money($expense->min),
             'max' => new Money($expense->max),
-            'avg' => new Money($expense->value / $expense->count)
+            'avg' => new Money($expense->sum / $expense->count)
         ]);
     }
 
@@ -87,5 +88,36 @@ class ExpenseController extends Controller
             ->get();
 
         return $expenses->map(fn (object $expense) => [ 'sum' => new Money($expense->sum) ]);
+    }
+
+    private function groupedByCompletedTimeAndType(Carbon $firstDay, Carbon $lastDay): Collection
+    {
+        $expenses = DB::table('expenses')
+            ->selectRaw('sum(value) as sum, expense_types.name as expense_type')
+            ->groupBy(['completed_at', 'expense_type'])
+            ->join('expense_types', 'expense_type', '=', 'expense_types.id', 'left')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->get()
+            ->map(fn (object $expense) => [
+                'type' => $expense->expense_type,
+                'sum' => new Money($expense->sum)
+            ]);
+
+        return $expenses->groupBy('type')
+            ->map(fn (Collection $group, string $type) => [
+                'type' => $type,
+                'sum' => new Money( $group->sum( fn (array $expense) => $expense['sum']->pennies() ) ),
+                'min' => new Money( $group->min( fn (array $expense) => $expense['sum']->pennies() ) ),
+                'max' => new Money( $group->max( fn (array $expense) => $expense['sum']->pennies() ) )
+            ])
+            ->map(
+                fn (array $group) => array_merge(
+                    $group,
+                    ['avg' => new Money( $group['sum']->pennies() / $firstDay->daysInMonth )]
+                )
+            )
+            ->sortByDesc('sum')
+            ->values();
     }
 }
