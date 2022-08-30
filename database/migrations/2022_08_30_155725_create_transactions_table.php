@@ -14,7 +14,7 @@ return new class extends Migration {
 
             $table->string('type');
 
-            $table->bigInteger('category_id');
+            $table->bigInteger('category_id')->unsigned()->nullable();
 
             $table->bigInteger('value')->unsigned();
 
