@@ -34,14 +34,12 @@ class ExpenseController extends Controller
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
 
-        $total = 0 > 0 ? [
-            'sum' => new Money( $result->sum(fn (array $expense) => $expense['value']->pennies()) ),
-            'min' => new Money( $result->min(fn (array $expense) => $expense['min']->pennies()) ),
-            'max' => new Money( $result->max(fn (array $expense) => $expense['max']->pennies()) )
-        ] : [
-            'sum' => new Money(0),
-            'min' => new Money(0),
-            'max' => new Money(0)
+        $completed = $this->groupedByCompletedTime($firstDay, $lastDay);
+
+        $total = [
+            'sum' => new Money( $completed->sum(fn (array $expense) => $expense['sum']->pennies()) ?? 0 ),
+            'min' => new Money( $completed->min(fn (array $expense) => $expense['sum']->pennies()) ?? 0 ),
+            'max' => new Money( $completed->max(fn (array $expense) => $expense['sum']->pennies()) ?? 0 )
         ];
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
@@ -77,5 +75,17 @@ class ExpenseController extends Controller
             'max' => new Money($expense->max),
             'avg' => new Money($expense->value / $expense->count)
         ]);
+    }
+
+    private function groupedByCompletedTime(Carbon $firstDay, Carbon $lastDay): Collection
+    {
+        $expenses = DB::table('expenses')
+            ->selectRaw('sum(value) as sum')
+            ->groupBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->get();
+
+        return $expenses->map(fn (object $expense) => [ 'sum' => new Money($expense->sum) ]);
     }
 }
