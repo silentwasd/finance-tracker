@@ -14,6 +14,10 @@
                     Общее
                 </a>
 
+                <a href="#table-time-type" class="list-group-item list-group-item-action">
+                    По типу (учет по дням)
+                </a>
+
                 <a href="#table-type" class="list-group-item list-group-item-action">
                     По типу (учет по записям)
                 </a>
@@ -53,6 +57,32 @@
                     <td>{{ $total['max'] }}</td>
                 </tr>
 
+                </tbody>
+            </table>
+
+            <table class="table" id="table-time-type">
+                <caption class="caption-top">По типу (учитывается расход по дням)</caption>
+
+                <thead class="table-light">
+                <tr>
+                    <td>Тип</td>
+                    <td>Сумма</td>
+                    <td>Минимум</td>
+                    <td>Максимум</td>
+                    <td>Среднее</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach ($timeAndType as $item)
+                    <tr>
+                        <td>{{ $item['type'] ?? 'Без типа' }}</td>
+                        <td>{{ $item['sum'] }}</td>
+                        <td>{{ $item['min'] }}</td>
+                        <td>{{ $item['max'] }}</td>
+                        <td>{{ $item['avg'] }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 

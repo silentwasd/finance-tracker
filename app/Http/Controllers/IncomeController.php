@@ -34,6 +34,7 @@ class IncomeController extends Controller
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
 
         return view('incomes.stats')
+            ->with('timeAndType', $this->groupedByCompletedTimeAndType($firstDay, $lastDay))
             ->with('type', $this->groupedByType($firstDay, $lastDay))
             ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
             ->with('month', $month);
@@ -78,5 +79,36 @@ class IncomeController extends Controller
         $total['avg'] = new Money( $total['sum']->pennies() / $firstDay->daysInMonth );
 
         return $total;
+    }
+
+    private function groupedByCompletedTimeAndType(Carbon $firstDay, Carbon $lastDay): Collection
+    {
+        $incomes = DB::table('incomes')
+            ->selectRaw('sum(value) as sum, income_types.name as income_type')
+            ->groupBy(['completed_at', 'income_type'])
+            ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->get()
+            ->map(fn (object $income) => [
+                'type' => $income->income_type,
+                'sum' => new Money($income->sum)
+            ]);
+
+        return $incomes->groupBy('type')
+            ->map(fn (Collection $group, string $type) => [
+                'type' => $type,
+                'sum' => new Money( $group->sum( fn (array $income) => $income['sum']->pennies() ) ),
+                'min' => new Money( $group->min( fn (array $income) => $income['sum']->pennies() ) ),
+                'max' => new Money( $group->max( fn (array $income) => $income['sum']->pennies() ) )
+            ])
+            ->map(
+                fn (array $group) => array_merge(
+                    $group,
+                    ['avg' => new Money( $group['sum']->pennies() / $firstDay->daysInMonth )]
+                )
+            )
+            ->sortByDesc('sum')
+            ->values();
     }
 }
