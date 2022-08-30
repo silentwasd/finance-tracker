@@ -36,7 +36,7 @@ class IncomeController extends Controller
         $incomes = DB::table('incomes')
             ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
             ->groupBy('income_type')
-            ->join('income_types', 'income_type', '=', 'income_types.id')
+            ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->get();

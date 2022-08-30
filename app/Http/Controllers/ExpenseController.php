@@ -36,7 +36,7 @@ class ExpenseController extends Controller
         $expenses = DB::table('expenses')
             ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, expense_types.name as expense_type')
             ->groupBy('expense_type')
-            ->join('expense_types', 'expense_type', '=', 'expense_types.id')
+            ->join('expense_types', 'expense_type', '=', 'expense_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->get();

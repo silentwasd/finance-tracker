@@ -69,7 +69,7 @@
                     <tbody>
                     @foreach ($result as $item)
                         <tr>
-                            <td>{{ $item['type'] }}</td>
+                            <td>{{ $item['type'] ?? 'Без типа' }}</td>
                             <td>{{ $item['value'] }}</td>
                             <td>{{ $item['min'] }}</td>
                             <td>{{ $item['max'] }}</td>
