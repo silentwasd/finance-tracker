@@ -39,6 +39,7 @@ class IncomeController extends Controller
             ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
+            ->orderByDesc('value')
             ->get();
 
         $result = $incomes->map(fn (object $income) => [

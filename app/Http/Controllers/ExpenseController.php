@@ -39,6 +39,7 @@ class ExpenseController extends Controller
             ->join('expense_types', 'expense_type', '=', 'expense_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
+            ->orderByDesc('value')
             ->get();
 
         $result = $expenses->map(fn (object $expense) => [
