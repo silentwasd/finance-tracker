@@ -34,11 +34,13 @@ Route::prefix('incomes')->name('incomes.')->group(function () {
 
 Route::prefix('expenses')->name('expenses.')->group(function () {
 
-    Route::get('', [ExpenseController::class, 'index'])->name('index');
-
     Route::get('stats', [ExpenseController::class, 'stats'])->name('stats.default');
 
     Route::get('stats/{month}', [ExpenseController::class, 'statsByMonth'])->name('stats');
+
+    Route::get('', [ExpenseController::class, 'index'])->name('index.default');
+
+    Route::get('{month}', [ExpenseController::class, 'indexByMonth'])->name('index');
 
 });
 

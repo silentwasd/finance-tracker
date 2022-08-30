@@ -15,12 +15,23 @@ class ExpenseController extends Controller
 {
     public function index()
     {
+        return redirect()->route('expenses.index', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
+    }
+
+    public function indexByMonth(Month $month)
+    {
+        $firstDay = new Carbon(new DateTime("first day of $month->name"));
+        $lastDay = new Carbon(new DateTime("last day of $month->name"));
+
         $items = Expense::orderBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
             ->with('expenseType')
             ->get();
 
         return view('expenses.index')
-            ->with('items', $items);
+            ->with('items', $items)
+            ->with('month', $month);
     }
 
     public function stats()

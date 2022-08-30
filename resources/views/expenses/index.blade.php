@@ -1,6 +1,10 @@
 @extends('layouts.main', ['title' => 'Расходы'])
 
 @section('main')
+    <div class="mb-3">
+        <x-month-selector :month="$month"></x-month-selector>
+    </div>
+
     <div class="row">
         <div class="col">
 
