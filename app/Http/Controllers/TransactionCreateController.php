@@ -6,12 +6,15 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\TransactionType;
+use Illuminate\Http\Request;
 
 class TransactionCreateController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
-        return view('transactions.create');
+        return view('transactions.create')
+            ->with('income', $request->query('from') != 'expenses.index')
+            ->with('expense', $request->query('from') == 'expenses.index');
     }
 
     public function store(StoreTransactionRequest $request)
@@ -23,6 +26,6 @@ class TransactionCreateController extends Controller
         $item->completed_at = now()->startOfDay();
         $item->save();
 
-        return redirect()->route('incomes.index.default');
+        return redirect()->route('transactions.edit', $item->id);
     }
 }

@@ -19,7 +19,7 @@
 
                     <div class="form-check mb-1">
                         <input class="form-check-input" type="radio" name="type"
-                               id="income" value="income" @checked(old('type') ? old('type') == 'income' : true)>
+                               id="income" value="income" @checked(old('type') ? old('type') == 'income' : $income)>
                         <label class="form-check-label" for="income">
                             Доход
                         </label>
@@ -27,7 +27,7 @@
 
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="type"
-                               id="expense" value="expense" @checked(old('type') == 'expense')>
+                               id="expense" value="expense" @checked(old('type') ? old('type') == 'expense' : $expense)>
                         <label class="form-check-label" for="expense">
                             Расход
                         </label>

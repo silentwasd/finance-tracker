@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Structures\Money;
+use App\Structures\TransactionType;
 
 class TransactionEditController extends Controller
 {
@@ -25,7 +26,12 @@ class TransactionEditController extends Controller
         $transaction->category_id = $request->input('category');
         $transaction->save();
 
-        return redirect()->route('incomes.index.default');
+        return redirect()->route(
+            match ($transaction->transaction_type) {
+                TransactionType::Income->value => 'incomes.index.default',
+                TransactionType::Expense->value => 'expenses.index.default'
+            }
+        );
     }
 
     public function destroy(Transaction $transaction)
