@@ -59,7 +59,8 @@ class JointController extends Controller
                 'balance' => new Money($row['balance']),
                 'date' => Carbon::createFromFormat('Y-m-d H:i:s', $date)
             ])
-            ->values();
+            ->values()
+            ->sortBy('date');
 
         return view('joint.balance')
             ->with('result', $result);
