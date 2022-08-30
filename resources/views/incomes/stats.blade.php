@@ -11,8 +11,13 @@
                     <tbody>
 
                     <tr>
-                        <td>Сумма</td>
+                        <td>Всего за месяц</td>
                         <td>{{ $total['sum'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>В среднем за день</td>
+                        <td>{{ $total['avg'] }}</td>
                     </tr>
 
                     </tbody>
