@@ -9,7 +9,7 @@ class NavViewComposer
     public function compose(View $view)
     {
         $view->with('nav', [
-            'incomes.index' => 'Доходы',
+            'incomes.index.default' => ['incomes.index', 'Доходы'],
             'expenses.index' => 'Расходы',
             'joint.index' => 'Общее',
             'joint.balance' => 'Баланс',

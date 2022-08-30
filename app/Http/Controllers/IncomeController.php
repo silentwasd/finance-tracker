@@ -15,12 +15,23 @@ class IncomeController extends Controller
 {
     public function index()
     {
+        return redirect()->route('incomes.index', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
+    }
+
+    public function indexByMonth(Month $month)
+    {
+        $firstDay = new Carbon(new DateTime("first day of $month->name"));
+        $lastDay = new Carbon(new DateTime("last day of $month->name"));
+
         $items = Income::orderBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
             ->with('incomeType')
             ->get();
 
         return view('incomes.index')
-            ->with('items', $items);
+            ->with('items', $items)
+            ->with('month', $month);
     }
 
     public function stats()

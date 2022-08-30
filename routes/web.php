@@ -22,11 +22,13 @@ Route::get('/', function () {
 
 Route::prefix('incomes')->name('incomes.')->group(function () {
 
-    Route::get('', [IncomeController::class, 'index'])->name('index');
-
     Route::get('stats', [IncomeController::class, 'stats'])->name('stats.default');
 
     Route::get('stats/{month}', [IncomeController::class, 'statsByMonth'])->name('stats');
+
+    Route::get('', [IncomeController::class, 'index'])->name('index.default');
+
+    Route::get('{month}', [IncomeController::class, 'indexByMonth'])->name('index');
 
 });
 
