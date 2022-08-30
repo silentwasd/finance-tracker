@@ -10,7 +10,6 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use UnitEnum;
 
 class IncomeController extends Controller
 {
@@ -44,17 +43,10 @@ class IncomeController extends Controller
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
 
-        $months = collect(Month::cases());
-        $curMonthKey = $months->search(fn (UnitEnum $unit) => $unit->name == $month->name);
-
         return view('incomes.stats')
             ->with('result', $this->groupedByType($firstDay, $lastDay))
             ->with('total', $total)
-            ->with('months', [
-                'cur' => $month->value,
-                'next' => $curMonthKey + 1 < $months->count() ? $months[$curMonthKey + 1]->value : null,
-                'prev' => $curMonthKey - 1 >= 0 ? $months[$curMonthKey - 1]->value : null,
-            ]);
+            ->with('month', $month);
     }
 
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection
