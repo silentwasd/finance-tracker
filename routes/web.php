@@ -4,6 +4,7 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\JointController;
 use App\Http\Controllers\TransactionCreateController;
+use App\Http\Controllers\TransactionEditController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,5 +63,11 @@ Route::prefix('transactions')->name('transactions.')->group(function () {
     Route::get('create', [TransactionCreateController::class, 'create'])->name('create');
 
     Route::post('store', [TransactionCreateController::class, 'store'])->name('store');
+
+    Route::get('edit/{transaction}', [TransactionEditController::class, 'edit'])->name('edit');
+
+    Route::post('update/{transaction}', [TransactionEditController::class, 'update'])->name('update');
+
+    Route::post('destroy/{transaction}', [TransactionEditController::class, 'destroy'])->name('destroy');
 
 });

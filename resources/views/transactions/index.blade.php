@@ -35,7 +35,11 @@
                 <tbody>
                 @foreach ($items as $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
+                        <td>
+                            <a href="{{ route('transactions.edit', $item->id) }}">
+                                {{ $item->name }}
+                            </a>
+                        </td>
                         <td>{{ $item->category->name ?? '–' }}</td>
                         <td>{{ $item->value }}</td>
                         <td>{{ $item->completed_at->format('d.m.Y') }}</td>
