@@ -12,7 +12,7 @@ return new class extends Migration {
 
             $table->string('name');
 
-            $table->string('type');
+            $table->string('transaction_type');
 
             $table->bigInteger('category_id')->unsigned()->nullable();
 
