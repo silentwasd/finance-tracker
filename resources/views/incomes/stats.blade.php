@@ -42,6 +42,7 @@
                         <td>Сумма</td>
                         <td>Минимум</td>
                         <td>Максимум</td>
+                        <td>Среднее</td>
                     </tr>
                     </thead>
 
@@ -52,6 +53,7 @@
                             <td>{{ $item['value'] }}</td>
                             <td>{{ $item['min'] }}</td>
                             <td>{{ $item['max'] }}</td>
+                            <td>{{ $item['avg'] }}</td>
                         </tr>
                     @endforeach
                     </tbody>
