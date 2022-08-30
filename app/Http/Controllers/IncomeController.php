@@ -44,10 +44,14 @@ class IncomeController extends Controller
             'avg' => new Money($income->value / $income->count)
         ]);
 
-        $total = [
-            'sum' => new Money( $result->count() > 0 ? $result->sum(fn (array $income) => $income['value']->pennies()) : 0 ),
-            'min' => new Money( $result->count() > 0 ? $result->min(fn (array $income) => $income['min']->pennies()) : 0 ),
-            'max' => new Money( $result->count() > 0 ? $result->max(fn (array $income) => $income['max']->pennies()) : 0 )
+        $total = $result->count() > 0 ? [
+            'sum' => new Money( $result->sum(fn (array $income) => $income['value']->pennies()) ),
+            'min' => new Money( $result->min(fn (array $income) => $income['min']->pennies()) ),
+            'max' => new Money( $result->max(fn (array $income) => $income['max']->pennies()) )
+        ] : [
+            'sum' => new Money(0),
+            'min' => new Money(0),
+            'max' => new Money(0)
         ];
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
