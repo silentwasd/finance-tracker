@@ -50,6 +50,7 @@ class ExpenseController extends Controller
         return view('expenses.stats')
             ->with('timeAndType', $this->groupedByCompletedTimeAndType($firstDay, $lastDay))
             ->with('type', $this->groupedByType($firstDay, $lastDay))
+            ->with('name', $this->groupedByName($firstDay, $lastDay))
             ->with('total', $total)
             ->with('months', [
                 'cur' => $month->value,
@@ -119,5 +120,26 @@ class ExpenseController extends Controller
             )
             ->sortByDesc('sum')
             ->values();
+    }
+
+    private function groupedByName(Carbon $firstDay, Carbon $lastDay): Collection
+    {
+        $expenses = DB::table('expenses')
+            ->selectRaw('name, sum(value) as sum, min(value) as min, max(value) as max, count(value) as count')
+            ->groupBy('name')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->having('count', '>', 1)
+            ->orderByDesc('sum')
+            ->get();
+
+        return $expenses->map(fn (object $expense) => [
+            'name' => $expense->name,
+            'sum' => new Money($expense->sum),
+            'min' => new Money($expense->min),
+            'max' => new Money($expense->max),
+            'avg' => new Money($expense->sum / $expense->count),
+            'count' => $expense->count
+        ]);
     }
 }
