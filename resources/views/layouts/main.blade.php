@@ -6,6 +6,8 @@
             <div class="col-3">
                 <div class="sticky-top" style="top: 1.5rem;">
                     @include('parts.nav')
+
+                    @yield('side')
                 </div>
             </div>
 

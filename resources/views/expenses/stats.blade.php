@@ -1,5 +1,29 @@
 @extends('layouts.main', ['title' => 'Статистика расходов'])
 
+@section('side')
+    <div class="row mt-3">
+        <div class="col">
+            <div class="list-group">
+                <a href="#table-general" class="list-group-item list-group-item-action">
+                    Общее
+                </a>
+
+                <a href="#table-name" class="list-group-item list-group-item-action">
+                    По наименованию
+                </a>
+
+                <a href="#table-time-type" class="list-group-item list-group-item-action">
+                    По типу (учет по дням)
+                </a>
+
+                <a href="#table-type" class="list-group-item list-group-item-action">
+                    По типу (учет по записям)
+                </a>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('main')
     <div class="row">
         <div class="col-auto">
@@ -24,7 +48,7 @@
     <div class="row">
         <div class="col">
 
-            <table class="table">
+            <table class="table" id="table-general">
                 <caption class="caption-top">Общее</caption>
 
                 <tbody>
@@ -52,7 +76,7 @@
                 </tbody>
             </table>
 
-            <table class="table">
+            <table class="table" id="table-name">
                 <caption class="caption-top">По наименованию (учитывается расход по записям)</caption>
 
                 <thead class="table-light">
@@ -80,7 +104,7 @@
                 </tbody>
             </table>
 
-            <table class="table">
+            <table class="table" id="table-time-type">
                 <caption class="caption-top">По типу (учитывается расход по дням)</caption>
 
                 <thead class="table-light">
@@ -106,7 +130,7 @@
                 </tbody>
             </table>
 
-            <table class="table">
+            <table class="table" id="table-type">
                 <caption class="caption-top">По типу (учитывается расход по записям)</caption>
 
                 <thead class="table-light">
