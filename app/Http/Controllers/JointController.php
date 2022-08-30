@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Expense;
-use App\Models\Income;
 use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\Month;
@@ -11,7 +9,6 @@ use App\Structures\TransactionType;
 use DateTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class JointController extends Controller

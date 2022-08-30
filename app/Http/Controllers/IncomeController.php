@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Income;
 use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\Month;
