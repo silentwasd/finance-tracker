@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Income;
+use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\Month;
+use App\Structures\TransactionType;
 use DateTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -23,10 +25,11 @@ class IncomeController extends Controller
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
 
-        $items = Income::orderBy('completed_at')
+        $items = Transaction::where('transaction_type', TransactionType::Income)
+            ->orderBy('completed_at')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
-            ->with('incomeType')
+            ->with('category')
             ->get();
 
         return view('incomes.index')
@@ -54,10 +57,11 @@ class IncomeController extends Controller
 
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection
     {
-        $incomes = DB::table('incomes')
-            ->selectRaw('sum(value) as sum, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
-            ->groupBy('income_type')
-            ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
+        $incomes = DB::table('transactions')
+            ->selectRaw('sum(value) as sum, min(value) as min, max(value) as max, count(value) as count, categories.name as income_type')
+            ->groupBy('category_id')
+            ->join('categories', 'category_id', '=', 'categories.id', 'left')
+            ->where('transactions.transaction_type', TransactionType::Income)
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->orderByDesc('sum')
@@ -74,9 +78,10 @@ class IncomeController extends Controller
 
     private function groupedByCompletedTime(Carbon $firstDay, Carbon $lastDay): array
     {
-        $incomes = DB::table('incomes')
+        $incomes = DB::table('transactions')
             ->selectRaw('sum(value) as sum')
             ->groupBy('completed_at')
+            ->where('transaction_type', TransactionType::Income)
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->get()
@@ -95,10 +100,11 @@ class IncomeController extends Controller
 
     private function groupedByCompletedTimeAndType(Carbon $firstDay, Carbon $lastDay): Collection
     {
-        $incomes = DB::table('incomes')
-            ->selectRaw('sum(value) as sum, income_types.name as income_type')
-            ->groupBy(['completed_at', 'income_type'])
-            ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
+        $incomes = DB::table('transactions')
+            ->selectRaw('sum(value) as sum, categories.name as income_type')
+            ->groupBy(['completed_at', 'category_id'])
+            ->join('categories', 'category_id', '=', 'categories.id', 'left')
+            ->where('transactions.transaction_type', TransactionType::Income)
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->get()
@@ -126,9 +132,10 @@ class IncomeController extends Controller
 
     private function groupedByName(Carbon $firstDay, Carbon $lastDay): Collection
     {
-        $incomes = DB::table('incomes')
+        $incomes = DB::table('transactions')
             ->selectRaw('name, sum(value) as sum, min(value) as min, max(value) as max, count(value) as count')
             ->groupBy('name')
+            ->where('transaction_type', TransactionType::Income)
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->having('count', '>', 1)
