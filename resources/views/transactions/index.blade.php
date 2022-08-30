@@ -1,5 +1,19 @@
 @extends('layouts.main', ['title' => $title ?? 'Транзакции'])
 
+@section('side')
+    <div class="row mt-3">
+        <div class="col">
+            <h5>Действия</h5>
+
+            <div class="list-group">
+                <a href="{{ route('transactions.create') }}" class="list-group-item list-group-item-action">
+                    Создать
+                </a>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('main')
     <div class="mb-3">
         <x-month-selector :month="$month"></x-month-selector>

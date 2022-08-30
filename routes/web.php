@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\JointController;
+use App\Http\Controllers\TransactionCreateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -53,5 +54,13 @@ Route::prefix('joint')->name('joint.')->group(function () {
     Route::get('', [JointController::class, 'index'])->name('index.default');
 
     Route::get('{month}', [JointController::class, 'indexByMonth'])->name('index');
+
+});
+
+Route::prefix('transactions')->name('transactions.')->group(function () {
+
+    Route::get('create', [TransactionCreateController::class, 'create'])->name('create');
+
+    Route::post('store', [TransactionCreateController::class, 'store'])->name('store');
 
 });
