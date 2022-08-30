@@ -20,6 +20,16 @@
                         <td>{{ $total['avg'] }}</td>
                     </tr>
 
+                    <tr>
+                        <td>Минимальный доход</td>
+                        <td>{{ $total['min'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Максимальный доход</td>
+                        <td>{{ $total['max'] }}</td>
+                    </tr>
+
                     </tbody>
                 </table>
 
@@ -30,6 +40,8 @@
                     <tr>
                         <td>Тип</td>
                         <td>Сумма</td>
+                        <td>Минимум</td>
+                        <td>Максимум</td>
                     </tr>
                     </thead>
 
@@ -38,6 +50,8 @@
                         <tr>
                             <td>{{ $item['type'] }}</td>
                             <td>{{ $item['value'] }}</td>
+                            <td>{{ $item['min'] }}</td>
+                            <td>{{ $item['max'] }}</td>
                         </tr>
                     @endforeach
                     </tbody>

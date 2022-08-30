@@ -21,7 +21,7 @@ class IncomeController extends Controller
     public function stats()
     {
         $incomes = DB::table('incomes')
-            ->selectRaw('sum(value) as value, income_types.name as income_type')
+            ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, income_types.name as income_type')
             ->groupBy('income_type')
             ->join('income_types', 'income_type', '=', 'income_types.id')
             ->where('completed_at', '>=', now()->startOfMonth())
@@ -30,11 +30,15 @@ class IncomeController extends Controller
 
         $result = $incomes->map(fn (object $income) => [
             'value' => new Money($income->value),
-            'type' => $income->income_type
+            'type' => $income->income_type,
+            'min' => new Money($income->min),
+            'max' => new Money($income->max)
         ]);
 
         $total = [
-            'sum' => new Money( $result->sum(fn (array $income) => $income['value']->pennies()) )
+            'sum' => new Money( $result->sum(fn (array $income) => $income['value']->pennies()) ),
+            'min' => new Money( $result->min(fn (array $income) => $income['min']->pennies()) ),
+            'max' => new Money( $result->max(fn (array $income) => $income['max']->pennies()) )
         ];
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
