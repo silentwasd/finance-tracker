@@ -24,6 +24,7 @@ class TransactionEditController extends Controller
         $transaction->name = $request->input('name');
         $transaction->value = new Money(round($request->input('value') * 100, 2));
         $transaction->category_id = $request->input('category');
+        $transaction->completed_at = $request->date('completed_at');
         $transaction->save();
 
         return redirect()->route(

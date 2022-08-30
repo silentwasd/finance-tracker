@@ -23,7 +23,7 @@ class TransactionCreateController extends Controller
         $item->name = $request->input('name');
         $item->value = new Money(round($request->input('value'), 2) * 100);
         $item->transaction_type = TransactionType::from($request->input('type'));
-        $item->completed_at = now()->startOfDay();
+        $item->completed_at = $request->date('completed_at');
         $item->save();
 
         return redirect()->route('transactions.edit', $item->id);

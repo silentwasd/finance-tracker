@@ -17,7 +17,8 @@ class StoreTransactionRequest extends FormRequest
                 'string',
                 Rule::in(collect(TransactionType::cases())->map(fn (TransactionType $type) => $type->value))
             ],
-            'value' => 'required|numeric|min:0'
+            'value' => 'required|numeric|min:0',
+            'completed_at' => 'required|date'
         ];
     }
 }

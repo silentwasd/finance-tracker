@@ -10,7 +10,7 @@
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Наименование</label>
-                    <input type="text" class="form-control" id="name" name="name"
+                    <input type="text" class="form-control" id="name" name="name" required
                            placeholder="Проценты на остаток" value="{{ old('name') ?? $transaction->name }}">
                 </div>
 
@@ -49,8 +49,15 @@
                 <div class="mb-3">
                     <label for="value" class="form-label">Значение</label>
                     <input type="number" class="form-control" id="value"
-                           placeholder="123,45" min="0.00" step="0.01"
+                           placeholder="123,45" min="0.00" step="0.01" required
                            name="value" value="{{ old('value') ?? $transaction->value->rubles() }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="completed_at" class="form-label">Дата совершения транзакции</label>
+                    <input type="date" class="form-control" id="completed_at" name="completed_at"
+                           value="{{ old('completed_at') ?? $transaction->completed_at->format('Y-m-d') }}"
+                           required>
                 </div>
 
                 <button class="btn btn-success">Обновить</button>
