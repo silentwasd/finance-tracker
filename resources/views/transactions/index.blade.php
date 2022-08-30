@@ -37,7 +37,7 @@
                 @foreach ($items as $item)
                     <tr>
                         <td>
-                            <a href="{{ route('transactions.edit', $item->id) }}">
+                            <a href="{{ route('transactions.edit', $item->id) }}" class="text-decoration-none">
                                 {{ $item->name }}
                             </a>
                         </td>

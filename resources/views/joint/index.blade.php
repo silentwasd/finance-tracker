@@ -24,7 +24,8 @@
                     <tr>
                         <td>{{ $item->transaction_type == \App\Structures\TransactionType::Income->value ? 'Доход' : 'Расход' }}</td>
                         <td>
-                            <a href="{{ route('transactions.edit', ['transaction' => $item->id]) }}">
+                            <a href="{{ route('transactions.edit', ['transaction' => $item->id]) }}"
+                               class="text-decoration-none">
                                 {{ $item->name }}
                             </a>
                         </td>
