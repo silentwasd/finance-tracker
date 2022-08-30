@@ -14,6 +14,10 @@
                     Общее
                 </a>
 
+                <a href="#table-name" class="list-group-item list-group-item-action">
+                    По наименованию
+                </a>
+
                 <a href="#table-time-type" class="list-group-item list-group-item-action">
                     По типу (учет по дням)
                 </a>
@@ -57,6 +61,34 @@
                     <td>{{ $total['max'] }}</td>
                 </tr>
 
+                </tbody>
+            </table>
+
+            <table class="table" id="table-name">
+                <caption class="caption-top">По наименованию (учитывается расход по записям)</caption>
+
+                <thead class="table-light">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Сумма</td>
+                    <td>Минимум</td>
+                    <td>Максимум</td>
+                    <td>Среднее</td>
+                    <td>Кол-во</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                @foreach ($name as $item)
+                    <tr>
+                        <td>{{ $item['name'] }}</td>
+                        <td>{{ $item['sum'] }}</td>
+                        <td>{{ $item['min'] }}</td>
+                        <td>{{ $item['max'] }}</td>
+                        <td>{{ $item['avg'] }}</td>
+                        <td>{{ $item['count'] }}</td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 

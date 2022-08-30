@@ -36,6 +36,7 @@ class IncomeController extends Controller
         return view('incomes.stats')
             ->with('timeAndType', $this->groupedByCompletedTimeAndType($firstDay, $lastDay))
             ->with('type', $this->groupedByType($firstDay, $lastDay))
+            ->with('name', $this->groupedByName($firstDay, $lastDay))
             ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
             ->with('month', $month);
     }
@@ -110,5 +111,26 @@ class IncomeController extends Controller
             )
             ->sortByDesc('sum')
             ->values();
+    }
+
+    private function groupedByName(Carbon $firstDay, Carbon $lastDay): Collection
+    {
+        $incomes = DB::table('incomes')
+            ->selectRaw('name, sum(value) as sum, min(value) as min, max(value) as max, count(value) as count')
+            ->groupBy('name')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->having('count', '>', 1)
+            ->orderByDesc('sum')
+            ->get();
+
+        return $incomes->map(fn (object $income) => [
+            'name' => $income->name,
+            'sum' => new Money($income->sum),
+            'min' => new Money($income->min),
+            'max' => new Money($income->max),
+            'avg' => new Money($income->sum / $income->count),
+            'count' => $income->count
+        ]);
     }
 }
