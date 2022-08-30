@@ -8,7 +8,9 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $items = Expense::orderBy('completed_at')->get();
+        $items = Expense::orderBy('completed_at')
+            ->with('expenseType')
+            ->get();
 
         return view('expenses')
             ->with('items', $items);
