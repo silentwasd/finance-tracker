@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        <h5>Страницы</h5>
+        <h5>Меню</h5>
 
         <div class="list-group">
             @foreach ($nav as $route => $name)
