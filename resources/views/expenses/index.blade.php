@@ -22,7 +22,7 @@
                 @foreach ($items as $item)
                     <tr>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->expenseType->name ?? '–' }}</td>
+                        <td>{{ $item->category->name ?? '–' }}</td>
                         <td>{{ $item->value }}</td>
                         <td>{{ $item->completed_at->format('d.m.Y') }}</td>
                     </tr>
