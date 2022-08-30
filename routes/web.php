@@ -20,7 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/incomes', [IncomeController::class, 'index']);
+Route::prefix('incomes')->group(function () {
+
+    Route::get('', [IncomeController::class, 'index']);
+
+    Route::get('stats', [IncomeController::class, 'stats']);
+
+});
 
 Route::get('/expenses', [ExpenseController::class, 'index']);
 
