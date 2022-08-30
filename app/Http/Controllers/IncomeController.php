@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Income;
 use App\Structures\Money;
+use App\Structures\Month;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class IncomeController extends Controller
 {
@@ -20,12 +23,17 @@ class IncomeController extends Controller
 
     public function stats()
     {
+        return redirect()->route('incomes.stats', Str::substr(Str::lower(now()->monthName), 0, 3));
+    }
+
+    public function statsByMonth(Month $month)
+    {
         $incomes = DB::table('incomes')
             ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
             ->groupBy('income_type')
             ->join('income_types', 'income_type', '=', 'income_types.id')
-            ->where('completed_at', '>=', now()->startOfMonth())
-            ->where('completed_at', '<=', now()->endOfMonth())
+            ->where('completed_at', '>=', (new Carbon(new \DateTime("first day of $month->name"))))
+            ->where('completed_at', '<=', (new Carbon(new \DateTime("last day of $month->name"))))
             ->get();
 
         $result = $incomes->map(fn (object $income) => [
@@ -37,9 +45,9 @@ class IncomeController extends Controller
         ]);
 
         $total = [
-            'sum' => new Money( $result->sum(fn (array $income) => $income['value']->pennies()) ),
-            'min' => new Money( $result->min(fn (array $income) => $income['min']->pennies()) ),
-            'max' => new Money( $result->max(fn (array $income) => $income['max']->pennies()) )
+            'sum' => new Money( $result->count() > 0 ? $result->sum(fn (array $income) => $income['value']->pennies()) : 0 ),
+            'min' => new Money( $result->count() > 0 ? $result->min(fn (array $income) => $income['min']->pennies()) : 0 ),
+            'max' => new Money( $result->count() > 0 ? $result->max(fn (array $income) => $income['max']->pennies()) : 0 )
         ];
 
         $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
