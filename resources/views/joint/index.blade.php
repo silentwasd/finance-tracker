@@ -23,7 +23,11 @@
                 @foreach ($items as $item)
                     <tr>
                         <td>{{ $item->transaction_type == \App\Structures\TransactionType::Income->value ? 'Доход' : 'Расход' }}</td>
-                        <td>{{ $item->name }}</td>
+                        <td>
+                            <a href="{{ route('transactions.edit', ['transaction' => $item->id]) }}">
+                                {{ $item->name }}
+                            </a>
+                        </td>
                         <td>{{ $item->category->name ?? '–' }}</td>
                         <td>{{ $item->value }}</td>
                         <td>{{ $item->completed_at->format('d.m.Y') }}</td>
