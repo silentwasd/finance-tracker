@@ -3,6 +3,8 @@
 @section('side')
     <div class="row mt-3">
         <div class="col">
+            <h5>Таблицы</h5>
+
             <div class="list-group">
                 <a href="#table-general" class="list-group-item list-group-item-action">
                     Общее

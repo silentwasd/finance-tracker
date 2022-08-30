@@ -1,5 +1,7 @@
 <div class="row">
     <div class="col">
+        <h5>Страницы</h5>
+
         <div class="list-group">
             @foreach ($nav as $route => $name)
                 <a href="{{ route($route) }}"
