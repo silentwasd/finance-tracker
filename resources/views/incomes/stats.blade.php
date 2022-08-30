@@ -67,7 +67,7 @@
             <table class="table" id="table-name">
                 <caption class="caption-top">По наименованию (учитывается расход по записям)</caption>
 
-                <thead class="table-light">
+                <thead class="table-light sticky-top">
                 <tr>
                     <td>Наименование</td>
                     <td>Сумма</td>
@@ -95,7 +95,7 @@
             <table class="table" id="table-time-type">
                 <caption class="caption-top">По типу (учитывается расход по дням)</caption>
 
-                <thead class="table-light">
+                <thead class="table-light sticky-top">
                 <tr>
                     <td>Тип</td>
                     <td>Сумма</td>
@@ -121,7 +121,7 @@
             <table class="table" id="table-type">
                 <caption class="caption-top">По типу (учитывается расход по записям)</caption>
 
-                <thead class="table-light">
+                <thead class="table-light sticky-top">
                 <tr>
                     <td>Тип</td>
                     <td>Сумма</td>

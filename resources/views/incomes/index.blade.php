@@ -5,7 +5,7 @@
         <div class="col">
 
             <table class="table">
-                <thead>
+                <thead class="table-light sticky-top">
                 <tr>
                     <td>Наименование</td>
                     <td>Тип</td>
