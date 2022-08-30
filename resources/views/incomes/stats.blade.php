@@ -1,12 +1,34 @@
 @extends('layouts.main', ['title' => 'Статистика доходов'])
 
+@section('side')
+    <div class="row mt-3">
+        <div class="col">
+            <h5>Страница</h5>
+
+            <div class="list-group">
+                <a href="#top" class="list-group-item list-group-item-action">
+                    Наверх
+                </a>
+
+                <a href="#table-general" class="list-group-item list-group-item-action">
+                    Общее
+                </a>
+
+                <a href="#table-type" class="list-group-item list-group-item-action">
+                    По типу (учет по записям)
+                </a>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('main')
     <x-month-selector :month="$month"></x-month-selector>
 
     <div class="row">
         <div class="col">
 
-            <table class="table">
+            <table class="table" id="table-general">
                 <caption class="caption-top">Общее</caption>
 
                 <tbody>
@@ -34,8 +56,8 @@
                 </tbody>
             </table>
 
-            <table class="table">
-                <caption class="caption-top">По типу</caption>
+            <table class="table" id="table-type">
+                <caption class="caption-top">По типу (учитывается расход по записям)</caption>
 
                 <thead class="table-light">
                 <tr>
@@ -48,10 +70,10 @@
                 </thead>
 
                 <tbody>
-                @foreach ($result as $item)
+                @foreach ($type as $item)
                     <tr>
                         <td>{{ $item['type'] ?? 'Без типа' }}</td>
-                        <td>{{ $item['value'] }}</td>
+                        <td>{{ $item['sum'] }}</td>
                         <td>{{ $item['min'] }}</td>
                         <td>{{ $item['max'] }}</td>
                         <td>{{ $item['avg'] }}</td>

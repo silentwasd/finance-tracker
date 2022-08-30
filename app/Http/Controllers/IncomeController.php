@@ -33,51 +33,50 @@ class IncomeController extends Controller
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
 
-        $completed = $this->groupedByCompletedTime($firstDay, $lastDay);
-
-        $total = [
-            'sum' => new Money( $completed->sum(fn (array $expense) => $expense['sum']->pennies()) ?? 0 ),
-            'min' => new Money( $completed->min(fn (array $expense) => $expense['sum']->pennies()) ?? 0 ),
-            'max' => new Money( $completed->max(fn (array $expense) => $expense['sum']->pennies()) ?? 0 )
-        ];
-
-        $total['avg'] = new Money( $total['sum']->pennies() / now()->daysInMonth );
-
         return view('incomes.stats')
-            ->with('result', $this->groupedByType($firstDay, $lastDay))
-            ->with('total', $total)
+            ->with('type', $this->groupedByType($firstDay, $lastDay))
+            ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
             ->with('month', $month);
     }
 
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection
     {
         $incomes = DB::table('incomes')
-            ->selectRaw('sum(value) as value, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
+            ->selectRaw('sum(value) as sum, min(value) as min, max(value) as max, count(value) as count, income_types.name as income_type')
             ->groupBy('income_type')
             ->join('income_types', 'income_type', '=', 'income_types.id', 'left')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
-            ->orderByDesc('value')
+            ->orderByDesc('sum')
             ->get();
 
         return $incomes->map(fn (object $income) => [
-            'value' => new Money($income->value),
             'type' => $income->income_type,
+            'sum' => new Money($income->sum),
             'min' => new Money($income->min),
             'max' => new Money($income->max),
-            'avg' => new Money($income->value / $income->count)
+            'avg' => new Money($income->sum / $income->count)
         ]);
     }
 
-    private function groupedByCompletedTime(Carbon $firstDay, Carbon $lastDay): Collection
+    private function groupedByCompletedTime(Carbon $firstDay, Carbon $lastDay): array
     {
         $incomes = DB::table('incomes')
             ->selectRaw('sum(value) as sum')
             ->groupBy('completed_at')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
-            ->get();
+            ->get()
+            ->map(fn (object $income) => [ 'sum' => new Money($income->sum) ]);
 
-        return $incomes->map(fn (object $income) => [ 'sum' => new Money($income->sum) ]);
+        $total = [
+            'sum' => new Money( $incomes->sum(fn (array $income) => $income['sum']->pennies()) ?? 0 ),
+            'min' => new Money( $incomes->min(fn (array $income) => $income['sum']->pennies()) ?? 0 ),
+            'max' => new Money( $incomes->max(fn (array $income) => $income['sum']->pennies()) ?? 0 )
+        ];
+
+        $total['avg'] = new Money( $total['sum']->pennies() / $firstDay->daysInMonth );
+
+        return $total;
     }
 }
