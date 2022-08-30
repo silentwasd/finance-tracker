@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-auto">
         <a class="btn btn-primary {{ $prev == null ? 'disabled' : '' }}"
-           href="{{ $prev ? route('expenses.stats', $prev) : '#' }}">
+           href="{{ $prev ? route(Route::currentRouteName(), $prev) : '#' }}">
             Предыдущий
         </a>
     </div>
@@ -12,7 +12,7 @@
 
     <div class="col-auto">
         <a class="btn btn-primary {{ $next == null ? 'disabled' : '' }}"
-           href="{{ $next ? route('expenses.stats', $next) : '#' }}">
+           href="{{ $next ? route(Route::currentRouteName(), $next) : '#' }}">
             Следующий
         </a>
     </div>
