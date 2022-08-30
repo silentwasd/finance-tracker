@@ -5,16 +5,34 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use App\Models\Income;
 use App\Structures\Money;
+use App\Structures\Month;
+use DateTime;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class JointController extends Controller
 {
     public function index()
     {
-        $incomes = Income::orderBy('completed_at')->get();
-        $expenses = Expense::orderBy('completed_at')->get();
+        return redirect()->route('joint.index', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
+    }
+
+    public function indexByMonth(Month $month)
+    {
+        $firstDay = new Carbon(new DateTime("first day of $month->name"));
+        $lastDay = new Carbon(new DateTime("last day of $month->name"));
+
+        $incomes = Income::orderBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->get();
+
+        $expenses = Expense::orderBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
+            ->get();
 
         $items = $incomes->map(fn (Income $income) => [
             'type' => 'income',
@@ -27,7 +45,8 @@ class JointController extends Controller
         )->sortBy(fn (array $item) => $item['model']->completed_at);
 
         return view('joint.index')
-            ->with('items', $items);
+            ->with('items', $items)
+            ->with('month', $month);
     }
 
     public function balance()
