@@ -51,13 +51,25 @@ class JointController extends Controller
 
     public function balance()
     {
+        return redirect()->route('joint.balance', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
+    }
+
+    public function balanceByMonth(Month $month)
+    {
+        $firstDay = new Carbon(new DateTime("first day of $month->name"));
+        $lastDay = new Carbon(new DateTime("last day of $month->name"));
+
         $incomes = DB::table('incomes')
             ->selectRaw("'income' as type, sum(value) as value, completed_at")
-            ->groupBy('completed_at');
+            ->groupBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay);
 
         $combined = DB::table('expenses')
             ->selectRaw("'expense' as type, sum(value) as value, completed_at")
             ->groupBy('completed_at')
+            ->where('completed_at', '>=', $firstDay)
+            ->where('completed_at', '<=', $lastDay)
             ->unionAll($incomes)
             ->get();
 
@@ -82,6 +94,7 @@ class JointController extends Controller
             ->sortBy('date');
 
         return view('joint.balance')
-            ->with('result', $result);
+            ->with('result', $result)
+            ->with('month', $month);
     }
 }

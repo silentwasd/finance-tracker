@@ -46,7 +46,9 @@ Route::prefix('expenses')->name('expenses.')->group(function () {
 
 Route::prefix('joint')->name('joint.')->group(function () {
 
-    Route::get('balance', [JointController::class, 'balance'])->name('balance');
+    Route::get('balance', [JointController::class, 'balance'])->name('balance.default');
+
+    Route::get('balance/{month}', [JointController::class, 'balanceByMonth'])->name('balance');
 
     Route::get('', [JointController::class, 'index'])->name('index.default');
 
