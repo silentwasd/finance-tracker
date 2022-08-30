@@ -11,9 +11,9 @@
             <table class="table">
                 <thead class="table-light sticky-top">
                 <tr>
-                    <td>Тип операции</td>
+                    <td>Тип транзакции</td>
                     <td>Наименование</td>
-                    <td>Тип записи</td>
+                    <td>Категория</td>
                     <td>Значение</td>
                     <td>Дата</td>
                 </tr>
@@ -22,11 +22,11 @@
                 <tbody>
                 @foreach ($items as $item)
                     <tr>
-                        <td>{{ $item['operationType'] == 'income' ? 'Доход' : 'Расход' }}</td>
-                        <td>{{ $item['model']->name }}</td>
-                        <td>{{ $item['recordType'] ?? '–' }}</td>
-                        <td>{{ $item['model']->value }}</td>
-                        <td>{{ $item['model']->completed_at->format('d.m.Y') }}</td>
+                        <td>{{ $item->transaction_type == \App\Structures\TransactionType::Income->value ? 'Доход' : 'Расход' }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->category->name ?? '–' }}</td>
+                        <td>{{ $item->value }}</td>
+                        <td>{{ $item->completed_at->format('d.m.Y') }}</td>
                     </tr>
                 @endforeach
                 </tbody>
