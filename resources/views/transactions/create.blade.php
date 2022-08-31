@@ -19,8 +19,8 @@
 
                     <div class="form-check mb-1">
                         <input class="form-check-input" type="radio" name="type"
-                               id="income" value="income"
-                            @checked(old('type') ? old('type') == 'income' : $income)>
+                               id="income" value="{{ \App\Structures\TransactionType::Income->value }}"
+                            @checked(old('type') ? old('type') == \App\Structures\TransactionType::Income->value : $income)>
                         <label class="form-check-label" for="income">
                             Доход
                         </label>
@@ -28,8 +28,8 @@
 
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="type"
-                               id="expense" value="expense"
-                            @checked(old('type') ? old('type') == 'expense' : $expense)>
+                               id="expense" value="{{ \App\Structures\TransactionType::Expense->value }}"
+                            @checked(old('type') ? old('type') == \App\Structures\TransactionType::Expense->value : $expense)>
                         <label class="form-check-label" for="expense">
                             Расход
                         </label>
