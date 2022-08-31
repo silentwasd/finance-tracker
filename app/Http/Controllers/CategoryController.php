@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Structures\TransactionType;
@@ -14,6 +15,21 @@ class CategoryController extends Controller
 
         return view('categories.index')
             ->with('items', $items);
+    }
+
+    public function create()
+    {
+        return view('categories.create');
+    }
+
+    public function store(StoreCategoryRequest $request)
+    {
+        $item = new Category();
+        $item->name = $request->input('name');
+        $item->transaction_type = TransactionType::from($request->input('type'));
+        $item->save();
+
+        return redirect()->route('categories.index');
     }
 
     public function edit(Category $category)

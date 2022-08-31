@@ -75,6 +75,10 @@ Route::prefix('categories')->name('categories.')->group(function () {
 
     Route::get('', [CategoryController::class, 'index'])->name('index');
 
+    Route::get('create', [CategoryController::class, 'create'])->name('create');
+
+    Route::post('store', [CategoryController::class, 'store'])->name('store');
+
     Route::get('edit/{category}', [CategoryController::class, 'edit'])->name('edit');
 
     Route::post('update/{category}', [CategoryController::class, 'update'])->name('update');

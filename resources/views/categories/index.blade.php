@@ -10,6 +10,10 @@
                     Наверх
                 </a>
 
+                <a href="{{ route('categories.create') }}" class="list-group-item list-group-item-action">
+                    Создать
+                </a>
+
                 <a href="#table-income" class="list-group-item list-group-item-action">
                     Категории дохода
                 </a>
