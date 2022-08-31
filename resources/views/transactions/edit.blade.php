@@ -11,7 +11,8 @@
                 <div class="mb-3">
                     <label for="name" class="form-label">{{ __('forms.transaction.name') }}</label>
                     <input type="text" class="form-control" id="name" name="name" required
-                           placeholder="{{ __('forms.transaction.name_placeholder') }}" value="{{ old('name') ?? $transaction->name }}">
+                           placeholder="{{ __('forms.transaction.name_placeholder') }}"
+                           value="{{ old('name') ?? $transaction->name }}">
                 </div>
 
                 <div class="mb-3">
@@ -37,9 +38,11 @@
                 <div class="mb-3">
                     <label for="category" class="form-label">{{ __('forms.transaction.category') }}</label>
                     <select id="category" name="category" class="form-select">
-                        <option value="" @selected($transaction->category_id == null)>{{ __('forms.transaction.category_none') }}</option>
+                        <option
+                            value="" @selected($transaction->category_id == null)>{{ __('forms.transaction.category_none') }}</option>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}" @selected($old = old('category') ? $old == $category->id : $category->id == $transaction->category_id)>
+                            <option
+                                value="{{ $category->id }}" @selected($old = old('category') ? $old == $category->id : $category->id == $transaction->category_id)>
                                 {{ $category->name }}
                             </option>
                         @endforeach
@@ -50,7 +53,7 @@
                     <label for="value" class="form-label">{{ __('forms.transaction.value') }}</label>
                     <input type="number" class="form-control" id="value"
                            placeholder="123,45" min="0.00" step="0.01" required
-                           name="value" value="{{ old('value') ?? $transaction->value->rubles() }}">
+                           name="value" value="{{ old('value') ?? $transaction->value->full() }}">
                 </div>
 
                 <div class="mb-3">

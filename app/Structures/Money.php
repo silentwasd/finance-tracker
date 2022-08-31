@@ -16,14 +16,14 @@ class Money
         return $this->value;
     }
 
-    public function rubles(): float
+    public function full(): float
     {
         return round($this->value / 100, 2);
     }
 
     public function asString(): string
     {
-        return number_format($this->rubles(), 2, '.', ' ') . " ₽";
+        return number_format($this->full(), 2, '.', ' ') . " ₽";
     }
 
     public function __toString(): string
