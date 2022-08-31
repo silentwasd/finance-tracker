@@ -1,21 +1,21 @@
-@extends('layouts.main', ['title' => 'Баланс'])
+@extends('layouts.main', ['title' => __('links.balance')])
 
 @section('side')
     <div class="row mt-3">
         <div class="col">
-            <h5>Действия</h5>
+            <h5>{{ __('links.actions') }}</h5>
 
             <div class="list-group">
                 <a href="#top" class="list-group-item list-group-item-action">
-                    Наверх
+                    {{ __('links.top') }}
                 </a>
 
                 <a href="#table-total" class="list-group-item list-group-item-action">
-                    Итого
+                    {{ __('tables.total') }}
                 </a>
 
                 <a href="#table-days" class="list-group-item list-group-item-action">
-                    По дням
+                    {{ __('tables.by_days') }}
                 </a>
             </div>
         </div>
@@ -31,35 +31,35 @@
         <div class="col">
 
             <table class="table" id="table-total">
-                <caption class="caption-top">Итого</caption>
+                <caption class="caption-top">{{ __('tables.total') }}</caption>
 
                 <tbody>
                 <tr>
-                    <td>Доход</td>
+                    <td>{{ __('tables.income') }}</td>
                     <td>{{ $total['income'] }}</td>
                 </tr>
 
                 <tr>
-                    <td>Расход</td>
+                    <td>{{ __('tables.expense') }}</td>
                     <td>{{ $total['expense'] }}</td>
                 </tr>
 
                 <tr>
-                    <td>Баланс</td>
+                    <td>{{ __('tables.balance') }}</td>
                     <td>{{ $total['balance'] }}</td>
                 </tr>
                 </tbody>
             </table>
 
             <table class="table" id="table-days">
-                <caption class="caption-top">По дням</caption>
+                <caption class="caption-top">{{ __('tables.by_days') }}</caption>
 
                 <thead class="table-light sticky-top">
                 <tr>
-                    <td>Доход</td>
-                    <td>Расход</td>
-                    <td>Баланс</td>
-                    <td>Дата</td>
+                    <td>{{ __('tables.income') }}</td>
+                    <td>{{ __('tables.expense') }}</td>
+                    <td>{{ __('tables.balance') }}</td>
+                    <td>{{ __('tables.date') }}</td>
                 </tr>
                 </thead>
 

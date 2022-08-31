@@ -18,9 +18,15 @@ abstract class TransactionController extends Controller
 
     protected string $routeNamePrefix;
 
-    protected string $indexTitle = 'Транзакции';
+    public function indexTitle()
+    {
+        return 'Transactions';
+    }
 
-    protected string $statsTitle = 'Статистика';
+    public function statsTitle()
+    {
+        return 'Statistics';
+    }
 
     public function index()
     {
@@ -45,7 +51,7 @@ abstract class TransactionController extends Controller
         return view('transactions.index')
             ->with('items', $items)
             ->with('month', $month)
-            ->with('title', $this->indexTitle);
+            ->with('title', $this->indexTitle());
     }
 
     public function stats()
@@ -67,7 +73,7 @@ abstract class TransactionController extends Controller
             ->with('name', $this->groupedByName($firstDay, $lastDay))
             ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
             ->with('month', $month)
-            ->with('title', $this->statsTitle);
+            ->with('title', $this->statsTitle());
     }
 
     private function groupedByType(Carbon $firstDay, Carbon $lastDay): Collection

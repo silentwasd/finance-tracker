@@ -10,7 +10,13 @@ class IncomeController extends TransactionController
 
     protected string $routeNamePrefix = 'incomes.';
 
-    protected string $indexTitle = 'Доходы';
+    public function indexTitle()
+    {
+        return __('links.income');
+    }
 
-    protected string $statsTitle = 'Статистика доходов';
+    public function statsTitle()
+    {
+        return __('links.income_stats');
+    }
 }

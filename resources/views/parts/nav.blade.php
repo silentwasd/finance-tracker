@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col">
-        <h5>Меню</h5>
+        <h5>{{ __('links.menu') }}</h5>
 
         <div class="list-group">
             @foreach ($nav as $route => $name)

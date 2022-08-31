@@ -1,14 +1,14 @@
 <table class="table" id="table-name">
-    <caption class="caption-top">По наименованию (учитывается расход по записям)</caption>
+    <caption class="caption-top">{{ __('tables.by_name') }}</caption>
 
     <thead class="table-light sticky-top">
     <tr>
-        <td>Наименование</td>
-        <td>Сумма</td>
-        <td>Минимум</td>
-        <td>Максимум</td>
-        <td>Среднее</td>
-        <td>Кол-во</td>
+        <td>{{ __('tables.name') }}</td>
+        <td>{{ __('tables.sum') }}</td>
+        <td>{{ __('tables.min') }}</td>
+        <td>{{ __('tables.max') }}</td>
+        <td>{{ __('tables.avg') }}</td>
+        <td>{{ __('tables.count') }}</td>
     </tr>
     </thead>
 

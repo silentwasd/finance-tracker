@@ -1,13 +1,13 @@
 <table class="table" id="table-type">
-    <caption class="caption-top">По типу (учитывается расход по записям)</caption>
+    <caption class="caption-top">{{ __('tables.by_category') }}</caption>
 
     <thead class="table-light sticky-top">
     <tr>
-        <td>Тип</td>
-        <td>Сумма</td>
-        <td>Минимум</td>
-        <td>Максимум</td>
-        <td>Среднее</td>
+        <td>{{ __('tables.category') }}</td>
+        <td>{{ __('tables.sum') }}</td>
+        <td>{{ __('tables.min') }}</td>
+        <td>{{ __('tables.max') }}</td>
+        <td>{{ __('tables.avg') }}</td>
     </tr>
     </thead>
 

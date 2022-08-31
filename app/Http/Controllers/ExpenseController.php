@@ -10,7 +10,13 @@ class ExpenseController extends TransactionController
 
     protected string $routeNamePrefix = 'expenses.';
 
-    protected string $indexTitle = 'Расходы';
+    public function indexTitle()
+    {
+        return __('links.expense');
+    }
 
-    protected string $statsTitle = 'Статистика расходов';
+    public function statsTitle()
+    {
+        return __('links.expense_stats');
+    }
 }

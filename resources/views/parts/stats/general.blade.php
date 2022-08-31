@@ -1,25 +1,25 @@
 <table class="table" id="table-general">
-    <caption class="caption-top">Общее</caption>
+    <caption class="caption-top">{{ __('tables.general') }}</caption>
 
     <tbody>
 
     <tr>
-        <td>Всего за месяц</td>
+        <td>{{ __('tables.monthly_total') }}</td>
         <td>{{ $data['sum'] }}</td>
     </tr>
 
     <tr>
-        <td>В среднем за день</td>
+        <td>{{ __('tables.daily_avg') }}</td>
         <td>{{ $data['avg'] }}</td>
     </tr>
 
     <tr>
-        <td>Минимум за день</td>
+        <td>{{ __('tables.daily_min') }}</td>
         <td>{{ $data['min'] }}</td>
     </tr>
 
     <tr>
-        <td>Максимум за день</td>
+        <td>{{ __('tables.daily_max') }}</td>
         <td>{{ $data['max'] }}</td>
     </tr>
 

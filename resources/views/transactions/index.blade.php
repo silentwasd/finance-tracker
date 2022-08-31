@@ -1,14 +1,14 @@
-@extends('layouts.main', ['title' => $title ?? 'Транзакции'])
+@extends('layouts.main', ['title' => $title ?? 'Transactions'])
 
 @section('side')
     <div class="row mt-3">
         <div class="col">
-            <h5>Действия</h5>
+            <h5>{{ __('links.actions') }}</h5>
 
             <div class="list-group">
                 <a href="{{ route('transactions.create', ['from' => Route::currentRouteName(), 'month' => $month]) }}"
                    class="list-group-item list-group-item-action">
-                    Создать
+                    {{ __('links.create') }}
                 </a>
             </div>
         </div>
@@ -26,10 +26,10 @@
             <table class="table">
                 <thead class="table-light sticky-top">
                 <tr>
-                    <td>Наименование</td>
-                    <td>Тип</td>
-                    <td>Значение</td>
-                    <td>Дата</td>
+                    <td>{{ __('tables.name') }}</td>
+                    <td>{{ __('tables.category') }}</td>
+                    <td>{{ __('tables.value') }}</td>
+                    <td>{{ __('tables.date') }}</td>
                 </tr>
                 </thead>
 

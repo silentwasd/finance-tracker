@@ -1,28 +1,28 @@
-@extends('layouts.main', ['title' => 'Создать категорию'])
+@extends('layouts.main', ['title' => __('forms.category.create_title')])
 
 @section('main')
     <div class="row">
         <div class="col">
-            <h3>Создать категорию</h3>
+            <h3>{{ __('forms.category.create_title') }}</h3>
 
             <form method="post" action="{{ route('categories.store') }}">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="name" class="form-label">Наименование</label>
+                    <label for="name" class="form-label">{{ __('forms.category.name') }}</label>
                     <input type="text" class="form-control" id="name" name="name" required
-                           placeholder="Еда" value="{{ old('name') }}">
+                           placeholder="{{ __('forms.category.name_placeholder') }}" value="{{ old('name') }}">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Для типа транзакции</label>
+                    <label class="form-label">{{ __('forms.category.transaction_type') }}</label>
 
                     <div class="form-check mb-1">
                         <input class="form-check-input" type="radio" name="type"
                                id="income" value="{{ \App\Structures\TransactionType::Income->value }}"
                             @checked(old('type') ? old('type') == \App\Structures\TransactionType::Income->value : true)>
                         <label class="form-check-label" for="income">
-                            Доход
+                            {{ Str::ucfirst(__('transaction_types.income')) }}
                         </label>
                     </div>
 
@@ -31,12 +31,12 @@
                                id="expense" value="{{ \App\Structures\TransactionType::Expense->value }}"
                             @checked(old('type') == \App\Structures\TransactionType::Expense->value)>
                         <label class="form-check-label" for="expense">
-                            Расход
+                            {{ Str::ucfirst(__('transaction_types.expense')) }}
                         </label>
                     </div>
                 </div>
 
-                <button class="btn btn-primary">Создать</button>
+                <button class="btn btn-primary">{{ __('forms.category.create_button') }}</button>
             </form>
         </div>
     </div>

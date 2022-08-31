@@ -2,7 +2,7 @@
     <div class="col-auto">
         <a class="btn btn-primary {{ $prev == null ? 'disabled' : '' }}"
            href="{{ $prev ? route(Route::currentRouteName(), $prev) : '#' }}">
-            Предыдущий
+            {{ __('month-calendar.prev') }}
         </a>
     </div>
 
@@ -13,7 +13,7 @@
     <div class="col-auto">
         <a class="btn btn-primary {{ $next == null ? 'disabled' : '' }}"
            href="{{ $next ? route(Route::currentRouteName(), $next) : '#' }}">
-            Следующий
+            {{ __('month-calendar.next') }}
         </a>
     </div>
 </div>

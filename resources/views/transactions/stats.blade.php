@@ -1,29 +1,29 @@
-@extends('layouts.main', ['title' => $title ?? 'Статистика'])
+@extends('layouts.main', ['title' => $title ?? 'Statistics'])
 
 @section('side')
     <div class="row mt-3">
         <div class="col">
-            <h5>Действия</h5>
+            <h5>{{ __('links.actions') }}</h5>
 
             <div class="list-group">
                 <a href="#top" class="list-group-item list-group-item-action">
-                    Наверх
+                    {{ __('links.top') }}
                 </a>
 
                 <a href="#table-general" class="list-group-item list-group-item-action">
-                    Общее
+                    {{ __('tables.general') }}
                 </a>
 
                 <a href="#table-name" class="list-group-item list-group-item-action">
-                    По наименованию
+                    {{ __('tables.by_name') }}
                 </a>
 
                 <a href="#table-time-type" class="list-group-item list-group-item-action">
-                    По типу (учет по дням)
+                    {{ __('tables.by_category_daily') }}
                 </a>
 
                 <a href="#table-type" class="list-group-item list-group-item-action">
-                    По типу (учет по записям)
+                    {{ __('tables.by_category') }}
                 </a>
             </div>
         </div>
