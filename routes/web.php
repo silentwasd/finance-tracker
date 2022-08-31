@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', '/incomes');
 
 Route::prefix('incomes')->name('incomes.')->group(function () {
 
