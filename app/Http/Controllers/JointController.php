@@ -68,8 +68,15 @@ class JointController extends Controller
             ->values()
             ->sortBy('date');
 
+        $total = [
+            'income' => new Money( $result->sum(fn (array $row) => $row['incomes']->pennies()) ),
+            'expense' => new Money( $result->sum(fn (array $row) => $row['expenses']->pennies()) ),
+            'balance' => new Money( $result->sum(fn (array $row) => $row['balance']->pennies()) )
+        ];
+
         return view('joint.balance')
             ->with('result', $result)
+            ->with('total', $total)
             ->with('month', $month);
     }
 }
