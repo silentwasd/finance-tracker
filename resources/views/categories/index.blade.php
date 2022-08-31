@@ -38,7 +38,11 @@
                 <tbody>
                 @foreach ($items->where('transaction_type', \App\Structures\TransactionType::Income->value) as $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
+                        <td>
+                            <a href="{{ route('categories.edit', $item->id) }}" class="text-decoration-none">
+                                {{ $item->name }}
+                            </a>
+                        </td>
                         <td>{{ $item->transactions()->count() }}</td>
                     </tr>
                 @endforeach
@@ -58,7 +62,11 @@
                 <tbody>
                 @foreach ($items->where('transaction_type', \App\Structures\TransactionType::Expense->value) as $item)
                     <tr>
-                        <td>{{ $item->name }}</td>
+                        <td>
+                            <a href="{{ route('categories.edit', $item->id) }}" class="text-decoration-none">
+                                {{ $item->name }}
+                            </a>
+                        </td>
                         <td>{{ $item->transactions()->count() }}</td>
                     </tr>
                 @endforeach
