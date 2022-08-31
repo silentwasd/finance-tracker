@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+    'date_format' => 'm/d/Y',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -31,7 +31,7 @@
                         </td>
                         <td>{{ $item->category->name ?? '–' }}</td>
                         <td>{{ $item->value }}</td>
-                        <td>{{ $item->completed_at->format('d.m.Y') }}</td>
+                        <td>{{ $item->completed_at->format(config('app.date_format')) }}</td>
                     </tr>
                 @endforeach
                 </tbody>

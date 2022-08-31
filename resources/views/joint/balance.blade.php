@@ -69,7 +69,7 @@
                         <td>{{ $row['incomes'] }}</td>
                         <td>{{ $row['expenses'] }}</td>
                         <td>{{ $row['balance'] }}</td>
-                        <td>{{ $row['date']->format('d.m.Y') }}</td>
+                        <td>{{ $row['date']->format(config('app.date_format')) }}</td>
                     </tr>
                 @endforeach
                 </tbody>
