@@ -3,7 +3,7 @@
 @section('side')
     <div class="row mt-3">
         <div class="col">
-            <h5>Страница</h5>
+            <h5>Действия</h5>
 
             <div class="list-group">
                 <a href="#top" class="list-group-item list-group-item-action">
