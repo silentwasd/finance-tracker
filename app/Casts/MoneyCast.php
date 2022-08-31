@@ -10,7 +10,8 @@ class MoneyCast implements CastsAttributes
 {
     public function get($model, $key, $value, $attributes)
     {
-        return new Money($value);
+        $money = resolve(\App\Services\Money::class);
+        return $money->make($value);
     }
 
     public function set($model, $key, $value, $attributes)

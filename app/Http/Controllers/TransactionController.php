@@ -18,6 +18,13 @@ abstract class TransactionController extends Controller
 
     protected string $routeNamePrefix;
 
+    protected \App\Services\Money $money;
+
+    public function __construct(\App\Services\Money $money)
+    {
+        $this->money = $money;
+    }
+
     public function indexTitle()
     {
         return 'Transactions';
@@ -90,10 +97,10 @@ abstract class TransactionController extends Controller
 
         return $transactions->map(fn (object $transaction) => [
             'type' => $transaction->category_name,
-            'sum' => new Money($transaction->sum),
-            'min' => new Money($transaction->min),
-            'max' => new Money($transaction->max),
-            'avg' => new Money($transaction->sum / $transaction->count)
+            'sum' => $this->money->make($transaction->sum),
+            'min' => $this->money->make($transaction->min),
+            'max' => $this->money->make($transaction->max),
+            'avg' => $this->money->make($transaction->sum / $transaction->count)
         ]);
     }
 
@@ -106,15 +113,15 @@ abstract class TransactionController extends Controller
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
             ->get()
-            ->map(fn (object $transaction) => [ 'sum' => new Money($transaction->sum) ]);
+            ->map(fn (object $transaction) => [ 'sum' => $this->money->make($transaction->sum) ]);
 
         $total = [
-            'sum' => new Money( $transactions->sum(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
-            'min' => new Money( $transactions->min(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
-            'max' => new Money( $transactions->max(fn (array $transaction) => $transaction['sum']->units()) ?? 0 )
+            'sum' => $this->money->make( $transactions->sum(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
+            'min' => $this->money->make( $transactions->min(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
+            'max' => $this->money->make( $transactions->max(fn (array $transaction) => $transaction['sum']->units()) ?? 0 )
         ];
 
-        $total['avg'] = new Money( $total['sum']->units() / $firstDay->daysInMonth );
+        $total['avg'] = $this->money->make( $total['sum']->units() / $firstDay->daysInMonth );
 
         return $total;
     }
@@ -131,20 +138,20 @@ abstract class TransactionController extends Controller
             ->get()
             ->map(fn (object $transaction) => [
                 'type' => $transaction->category_name ?? 'none',
-                'sum' => new Money($transaction->sum)
+                'sum' => $this->money->make($transaction->sum)
             ]);
 
         return $transactions->groupBy('type')
             ->map(fn (Collection $group, string $type) => [
                 'type' => $type == 'none' ? null : $type,
-                'sum' => new Money( $group->sum( fn (array $transaction) => $transaction['sum']->units() ) ),
-                'min' => new Money( $group->min( fn (array $transaction) => $transaction['sum']->units() ) ),
-                'max' => new Money( $group->max( fn (array $transaction) => $transaction['sum']->units() ) )
+                'sum' => $this->money->make( $group->sum( fn (array $transaction) => $transaction['sum']->units() ) ),
+                'min' => $this->money->make( $group->min( fn (array $transaction) => $transaction['sum']->units() ) ),
+                'max' => $this->money->make( $group->max( fn (array $transaction) => $transaction['sum']->units() ) )
             ])
             ->map(
                 fn (array $group) => array_merge(
                     $group,
-                    ['avg' => new Money( $group['sum']->units() / $firstDay->daysInMonth )]
+                    ['avg' => $this->money->make( $group['sum']->units() / $firstDay->daysInMonth )]
                 )
             )
             ->sortByDesc('sum')
@@ -165,10 +172,10 @@ abstract class TransactionController extends Controller
 
         return $transactions->map(fn (object $transaction) => [
             'name' => $transaction->name,
-            'sum' => new Money($transaction->sum),
-            'min' => new Money($transaction->min),
-            'max' => new Money($transaction->max),
-            'avg' => new Money($transaction->sum / $transaction->count),
+            'sum' => $this->money->make($transaction->sum),
+            'min' => $this->money->make($transaction->min),
+            'max' => $this->money->make($transaction->max),
+            'avg' => $this->money->make($transaction->sum / $transaction->count),
             'count' => $transaction->count
         ]);
     }

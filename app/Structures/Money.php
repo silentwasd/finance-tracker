@@ -2,9 +2,9 @@
 
 namespace App\Structures;
 
-class Money
+abstract class Money
 {
-    private int $value;
+    protected int $value;
 
     public function __construct(int $value)
     {
@@ -16,18 +16,12 @@ class Money
         return $this->value;
     }
 
-    public function full(): float
-    {
-        return round($this->value / 100, 2);
-    }
-
-    public function asString(): string
-    {
-        return number_format($this->full(), 2, '.', ' ') . " ₽";
-    }
-
     public function __toString(): string
     {
         return $this->asString();
     }
+
+    public abstract function full(): float;
+
+    public abstract function asString(): string;
 }

@@ -20,11 +20,11 @@ class TransactionCreateController extends Controller
             ->with('completed_at', $request->query('month') ? new Carbon(new DateTime($request->query('month'))) : now());
     }
 
-    public function store(StoreTransactionRequest $request)
+    public function store(StoreTransactionRequest $request, \App\Services\Money $money)
     {
         $item = new Transaction();
         $item->name = $request->input('name');
-        $item->value = new Money(round($request->input('value'), 2) * 100);
+        $item->value = $money->make(round($request->input('value'), 2) * 100);
         $item->transaction_type = TransactionType::from($request->input('type'));
         $item->completed_at = $request->date('completed_at');
         $item->save();

@@ -13,6 +13,13 @@ use Illuminate\Support\Str;
 
 class JointController extends Controller
 {
+    private \App\Services\Money $money;
+
+    public function __construct(\App\Services\Money $money)
+    {
+        $this->money = $money;
+    }
+
     public function index()
     {
         return redirect()->route('joint.index', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
@@ -56,12 +63,12 @@ class JointController extends Controller
                 $expense = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Expense->value) ?? null;
 
                 $result = [
-                    'incomes' => $income->value ?? new Money(0),
-                    'expenses' => $expense->value ?? new Money(0),
+                    'incomes' => $income->value ?? $this->money->make(0),
+                    'expenses' => $expense->value ?? $this->money->make(0),
                     'date' => Carbon::createFromFormat('Y-m-d H:i:s', $date)
                 ];
 
-                $result['balance'] = new Money($result['incomes']->units() - $result['expenses']->units());
+                $result['balance'] = $this->money->make($result['incomes']->units() - $result['expenses']->units());
 
                 return $result;
             })
@@ -69,9 +76,9 @@ class JointController extends Controller
             ->sortBy('date');
 
         $total = [
-            'income' => new Money( $result->sum(fn (array $row) => $row['incomes']->units()) ),
-            'expense' => new Money( $result->sum(fn (array $row) => $row['expenses']->units()) ),
-            'balance' => new Money( $result->sum(fn (array $row) => $row['balance']->units()) )
+            'income' => $this->money->make( $result->sum(fn (array $row) => $row['incomes']->units()) ),
+            'expense' => $this->money->make( $result->sum(fn (array $row) => $row['expenses']->units()) ),
+            'balance' => $this->money->make( $result->sum(fn (array $row) => $row['balance']->units()) )
         ];
 
         return view('joint.balance')
