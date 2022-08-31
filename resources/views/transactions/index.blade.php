@@ -6,7 +6,7 @@
             <h5>Действия</h5>
 
             <div class="list-group">
-                <a href="{{ route('transactions.create', ['from' => Route::currentRouteName()]) }}"
+                <a href="{{ route('transactions.create', ['from' => Route::currentRouteName(), 'month' => $month]) }}"
                    class="list-group-item list-group-item-action">
                     Создать
                 </a>

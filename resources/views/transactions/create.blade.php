@@ -46,7 +46,7 @@
                 <div class="mb-3">
                     <label for="completed_at" class="form-label">Дата совершения транзакции</label>
                     <input type="date" class="form-control" id="completed_at" name="completed_at"
-                           value="{{ old('completed_at') ?? now()->startOfDay()->format('Y-m-d') }}"
+                           value="{{ old('completed_at') ?? $completed_at->startOfDay()->format('Y-m-d') }}"
                            required>
                 </div>
 

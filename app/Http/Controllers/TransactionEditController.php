@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\Category;
 use App\Models\Transaction;
 use App\Structures\Money;
+use App\Structures\Month;
 use App\Structures\TransactionType;
 
 class TransactionEditController extends Controller
@@ -29,10 +30,10 @@ class TransactionEditController extends Controller
 
         return redirect()->route(
             match ($transaction->transaction_type) {
-                TransactionType::Income->value => 'incomes.index.default',
-                TransactionType::Expense->value => 'expenses.index.default'
+                TransactionType::Income->value => 'incomes.index',
+                TransactionType::Expense->value => 'expenses.index'
             }
-        );
+        , Month::fromDateTime($transaction->completed_at));
     }
 
     public function destroy(Transaction $transaction)

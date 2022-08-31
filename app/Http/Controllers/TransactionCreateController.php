@@ -6,7 +6,9 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\TransactionType;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class TransactionCreateController extends Controller
 {
@@ -14,7 +16,8 @@ class TransactionCreateController extends Controller
     {
         return view('transactions.create')
             ->with('income', $request->query('from') != 'expenses.index')
-            ->with('expense', $request->query('from') == 'expenses.index');
+            ->with('expense', $request->query('from') == 'expenses.index')
+            ->with('completed_at', $request->query('month') ? new Carbon(new DateTime($request->query('month'))) : now());
     }
 
     public function store(StoreTransactionRequest $request)
