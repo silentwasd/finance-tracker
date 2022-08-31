@@ -14,7 +14,8 @@ class NavViewComposer
             'joint.index.default' => ['joint.index', 'Общее'],
             'joint.balance.default' => ['joint.balance', 'Баланс'],
             'incomes.stats.default' => ['incomes.stats', 'Статистика доходов'],
-            'expenses.stats.default' => ['expenses.stats', 'Статистика расходов']
+            'expenses.stats.default' => ['expenses.stats', 'Статистика расходов'],
+            'categories.index' => 'Категории'
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\JointController;
@@ -67,5 +68,11 @@ Route::prefix('transactions')->name('transactions.')->group(function () {
     Route::post('update/{transaction}', [TransactionEditController::class, 'update'])->name('update');
 
     Route::post('destroy/{transaction}', [TransactionEditController::class, 'destroy'])->name('destroy');
+
+});
+
+Route::prefix('categories')->name('categories.')->group(function () {
+
+    Route::get('', [CategoryController::class, 'index'])->name('index');
 
 });
