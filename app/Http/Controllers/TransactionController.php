@@ -124,13 +124,13 @@ abstract class TransactionController extends Controller
             ->where('completed_at', '<=', $lastDay)
             ->get()
             ->map(fn (object $transaction) => [
-                'type' => $transaction->category_name,
+                'type' => $transaction->category_name ?? 'none',
                 'sum' => new Money($transaction->sum)
             ]);
 
         return $transactions->groupBy('type')
             ->map(fn (Collection $group, string $type) => [
-                'type' => $type,
+                'type' => $type == 'none' ? null : $type,
                 'sum' => new Money( $group->sum( fn (array $transaction) => $transaction['sum']->pennies() ) ),
                 'min' => new Money( $group->min( fn (array $transaction) => $transaction['sum']->pennies() ) ),
                 'max' => new Money( $group->max( fn (array $transaction) => $transaction['sum']->pennies() ) )
