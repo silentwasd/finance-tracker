@@ -11,7 +11,7 @@ class Money
         $this->value = $value;
     }
 
-    public function pennies(): int
+    public function units(): int
     {
         return $this->value;
     }

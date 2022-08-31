@@ -109,12 +109,12 @@ abstract class TransactionController extends Controller
             ->map(fn (object $transaction) => [ 'sum' => new Money($transaction->sum) ]);
 
         $total = [
-            'sum' => new Money( $transactions->sum(fn (array $transaction) => $transaction['sum']->pennies()) ?? 0 ),
-            'min' => new Money( $transactions->min(fn (array $transaction) => $transaction['sum']->pennies()) ?? 0 ),
-            'max' => new Money( $transactions->max(fn (array $transaction) => $transaction['sum']->pennies()) ?? 0 )
+            'sum' => new Money( $transactions->sum(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
+            'min' => new Money( $transactions->min(fn (array $transaction) => $transaction['sum']->units()) ?? 0 ),
+            'max' => new Money( $transactions->max(fn (array $transaction) => $transaction['sum']->units()) ?? 0 )
         ];
 
-        $total['avg'] = new Money( $total['sum']->pennies() / $firstDay->daysInMonth );
+        $total['avg'] = new Money( $total['sum']->units() / $firstDay->daysInMonth );
 
         return $total;
     }
@@ -137,14 +137,14 @@ abstract class TransactionController extends Controller
         return $transactions->groupBy('type')
             ->map(fn (Collection $group, string $type) => [
                 'type' => $type == 'none' ? null : $type,
-                'sum' => new Money( $group->sum( fn (array $transaction) => $transaction['sum']->pennies() ) ),
-                'min' => new Money( $group->min( fn (array $transaction) => $transaction['sum']->pennies() ) ),
-                'max' => new Money( $group->max( fn (array $transaction) => $transaction['sum']->pennies() ) )
+                'sum' => new Money( $group->sum( fn (array $transaction) => $transaction['sum']->units() ) ),
+                'min' => new Money( $group->min( fn (array $transaction) => $transaction['sum']->units() ) ),
+                'max' => new Money( $group->max( fn (array $transaction) => $transaction['sum']->units() ) )
             ])
             ->map(
                 fn (array $group) => array_merge(
                     $group,
-                    ['avg' => new Money( $group['sum']->pennies() / $firstDay->daysInMonth )]
+                    ['avg' => new Money( $group['sum']->units() / $firstDay->daysInMonth )]
                 )
             )
             ->sortByDesc('sum')

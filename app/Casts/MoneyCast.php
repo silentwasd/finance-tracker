@@ -19,6 +19,6 @@ class MoneyCast implements CastsAttributes
             throw new InvalidArgumentException('The given value is not an Money instance.');
         }
 
-        return $value->pennies();
+        return $value->units();
     }
 }

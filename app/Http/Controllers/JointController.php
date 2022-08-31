@@ -61,7 +61,7 @@ class JointController extends Controller
                     'date' => Carbon::createFromFormat('Y-m-d H:i:s', $date)
                 ];
 
-                $result['balance'] = new Money($result['incomes']->pennies() - $result['expenses']->pennies());
+                $result['balance'] = new Money($result['incomes']->units() - $result['expenses']->units());
 
                 return $result;
             })
@@ -69,9 +69,9 @@ class JointController extends Controller
             ->sortBy('date');
 
         $total = [
-            'income' => new Money( $result->sum(fn (array $row) => $row['incomes']->pennies()) ),
-            'expense' => new Money( $result->sum(fn (array $row) => $row['expenses']->pennies()) ),
-            'balance' => new Money( $result->sum(fn (array $row) => $row['balance']->pennies()) )
+            'income' => new Money( $result->sum(fn (array $row) => $row['incomes']->units()) ),
+            'expense' => new Money( $result->sum(fn (array $row) => $row['expenses']->units()) ),
+            'balance' => new Money( $result->sum(fn (array $row) => $row['balance']->units()) )
         ];
 
         return view('joint.balance')
