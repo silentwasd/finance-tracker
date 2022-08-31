@@ -11,7 +11,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $items = Category::all();
+        $items = Category::with('transactions')
+            ->get()
+            ->sortByDesc(fn (Category $category) => count($category->transactions));
 
         return view('categories.index')
             ->with('items', $items);

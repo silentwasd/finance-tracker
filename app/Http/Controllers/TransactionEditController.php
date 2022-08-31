@@ -13,7 +13,10 @@ class TransactionEditController extends Controller
 {
     public function edit(Transaction $transaction)
     {
-        $categories = Category::where('transaction_type', $transaction->transaction_type)->get();
+        $categories = Category::where('transaction_type', $transaction->transaction_type)
+            ->with('transactions')
+            ->get()
+            ->sortByDesc(fn (Category $category) => count($category->transactions));
 
         return view('transactions.edit')
             ->with('transaction', $transaction)
