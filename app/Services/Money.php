@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Structures\RubleMoney;
+use App\Structures\DollarMoney;
 
 class Money
 {
     public function make(int $value): \App\Structures\Money
     {
-        return new RubleMoney($value);
+        return new DollarMoney($value);
     }
 }
