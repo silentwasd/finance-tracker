@@ -26,5 +26,6 @@ return [
     'by_category_daily' => 'By category (daily)',
     'income_categories' => 'Income categories',
     'expense_categories' => 'Expense categories',
-    'transaction_count' => 'Transaction count'
+    'transaction_count' => 'Transaction count',
+    'category_none' => 'None'
 ];

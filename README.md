@@ -36,10 +36,11 @@ use any relation database, but I test it only on MySQL.
 ### Application installation
 
 1. Clone GitHub repository
-2. Copy **.env.example** as **.env**
-3. Configure database connection ([see Laravel docs](https://laravel.com/docs/9.x/database#configuration))
-4. Run `php artisan key:generate` command
-5. Run `php artisan migrate`
+2. Run `composer update`
+3. Copy **.env.example** as **.env**
+4. Configure database connection ([see Laravel docs](https://laravel.com/docs/9.x/database#configuration))
+5. Run `php artisan key:generate` command
+6. Run `php artisan migrate`
 
 That's all!
 

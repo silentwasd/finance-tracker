@@ -14,7 +14,7 @@
     <tbody>
     @foreach ($data as $item)
         <tr>
-            <td>{{ $item['type'] ?? 'Без типа' }}</td>
+            <td>{{ $item['type'] ?? __('tables.category_none') }}</td>
             <td>{{ $item['sum'] }}</td>
             <td>{{ $item['min'] }}</td>
             <td>{{ $item['max'] }}</td>
