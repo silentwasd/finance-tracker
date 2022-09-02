@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'table' => 'Table',
     'name' => 'Name',
     'category' => 'Category',
     'value' => 'Value',

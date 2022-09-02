@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use App\Structures\Money;
 use App\Structures\Month;
 use App\Structures\TransactionType;
 use DateTime;
@@ -55,8 +54,28 @@ abstract class TransactionController extends Controller
             ->with('category')
             ->get();
 
+        $days = collect();
+        for ($d = 1; $d <= $lastDay->daysInMonth; $d++) {
+            $date = Carbon::create($firstDay->year, $firstDay->month, $d);
+            $days[$date->toDateTimeString()] = [
+                'completed_at' => $date,
+                'value' => $this->money->make(0)
+            ];
+        }
+
+        $days = $days->merge(
+            $items->groupBy(fn (Transaction $transaction) => $transaction->completed_at->toDateTimeString())
+                ->map(fn (Collection $group, string $completedAt) => [
+                    'completed_at' => Carbon::createFromTimeString($completedAt),
+                    'value' => $this->money->make( $group->sum(fn (Transaction $transaction) => $transaction->value->units()) )
+                ])
+        )->values();
+
         return view('transactions.index')
             ->with('items', $items)
+            ->with('days', $days)
+            ->with('firstDay', $firstDay)
+            ->with('lastDay', $lastDay)
             ->with('month', $month)
             ->with('title', $this->indexTitle());
     }

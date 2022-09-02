@@ -8,6 +8,10 @@
 </head>
 <body>
 
+<script src="{{ asset('js/luxon.js') }}"></script>
+<script src="{{ asset('js/chart.js') }}"></script>
+<script src="{{ asset('js/chartjs-adapter-luxon.js') }}"></script>
+
 @yield('body')
 
 </body>
