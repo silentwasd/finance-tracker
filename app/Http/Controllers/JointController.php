@@ -65,7 +65,7 @@ class JointController extends Controller
         return redirect()->route('joint.balance', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
     }
 
-    public function balanceByMonth(Month $month)
+    public function balanceByMonth(Chart $chart, Month $month)
     {
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
@@ -76,23 +76,28 @@ class JointController extends Controller
             ->where('completed_at', '<=', $lastDay)
             ->get();
 
-        $result = $transactions->groupBy('completed_at')
-            ->map(function (Collection $row, string $date) {
-                $income = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Income->value) ?? null;
-                $expense = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Expense->value) ?? null;
+        $result = $chart->makePeriod($firstDay, $lastDay, fn (Carbon $date) => [
+            'incomes' => $this->money->make(0),
+            'expenses' => $this->money->make(0),
+            'balance' => $this->money->make(0),
+            'date' => $date
+        ])->merge(
+            $transactions->groupBy('completed_at')
+                ->map(function (Collection $row, string $date) {
+                    $income = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Income->value) ?? null;
+                    $expense = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Expense->value) ?? null;
 
-                $result = [
-                    'incomes' => $income->value ?? $this->money->make(0),
-                    'expenses' => $expense->value ?? $this->money->make(0),
-                    'date' => Carbon::createFromFormat('Y-m-d H:i:s', $date)
-                ];
+                    $result = [
+                        'incomes' => $income->value ?? $this->money->make(0),
+                        'expenses' => $expense->value ?? $this->money->make(0),
+                        'date' => Carbon::createFromFormat('Y-m-d H:i:s', $date)
+                    ];
 
-                $result['balance'] = $this->money->make($result['incomes']->units() - $result['expenses']->units());
+                    $result['balance'] = $this->money->make($result['incomes']->units() - $result['expenses']->units());
 
-                return $result;
-            })
-            ->values()
-            ->sortBy('date');
+                    return $result;
+                })
+        )->values()->sortBy('date');
 
         $total = [
             'income' => $this->money->make( $result->sum(fn (array $row) => $row['incomes']->units()) ),
@@ -103,6 +108,8 @@ class JointController extends Controller
         return view('joint.balance')
             ->with('result', $result)
             ->with('total', $total)
-            ->with('month', $month);
+            ->with('month', $month)
+            ->with('firstDay', $firstDay)
+            ->with('lastDay', $lastDay);
     }
 }

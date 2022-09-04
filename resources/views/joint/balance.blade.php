@@ -15,7 +15,11 @@
                 </a>
 
                 <a href="#table-days" class="list-group-item list-group-item-action">
-                    {{ __('tables.by_days') }}
+                    {{ __('tables.by_days') }} ({{ Str::lower(__('tables.table')) }})
+                </a>
+
+                <a href="#chart-days" class="list-group-item list-group-item-action">
+                    {{ __('tables.by_days') }} ({{ Str::lower(__('charts.chart')) }})
                 </a>
             </div>
         </div>
@@ -74,6 +78,49 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <canvas id="chart-days" width="400" height="200"></canvas>
+
+            <script>
+                const ctx = document.getElementById('chart-days').getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: [{
+                            label: '{{ __('tables.balance') }}',
+                            data: [
+                                    @foreach ($result as $item)
+                                {
+                                    x: '{{ $item['date']->toIso8601String() }}',
+                                    y: {{ $item['balance']->full() }}
+                                },
+                                @endforeach
+                            ],
+                            backgroundColor: 'rgba(112,134,255,0.5)',
+                            borderColor: 'rgb(38,122,168)',
+                            borderWidth: 2,
+                            fill: true,
+                            stepped: false,
+                            tension: 0.2,
+                            spanGaps: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'time',
+                                bounds: 'ticks',
+                                min: '{{ $firstDay->toIso8601String() }}',
+                                max: '{{ $lastDay->toIso8601String() }}',
+                                time: {
+                                    unit: 'day',
+                                    round: 'day'
+                                }
+                            },
+                        }
+                    }
+                });
+            </script>
 
         </div>
     </div>
