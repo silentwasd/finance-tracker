@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Chart;
 use App\Services\Money;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Money::class);
+        $this->app->singleton(Chart::class);
     }
 
     /**

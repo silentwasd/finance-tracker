@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Services\Chart;
 use App\Structures\Month;
 use App\Structures\TransactionType;
 use DateTime;
@@ -42,7 +43,7 @@ abstract class TransactionController extends Controller
         );
     }
 
-    public function indexByMonth(Month $month)
+    public function indexByMonth(Chart $chart, Month $month)
     {
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
@@ -54,16 +55,10 @@ abstract class TransactionController extends Controller
             ->with('category')
             ->get();
 
-        $days = collect();
-        for ($d = 1; $d <= $lastDay->daysInMonth; $d++) {
-            $date = Carbon::create($firstDay->year, $firstDay->month, $d);
-            $days[$date->toDateTimeString()] = [
-                'completed_at' => $date,
-                'value' => $this->money->make(0)
-            ];
-        }
-
-        $days = $days->merge(
+        $days = $chart->makePeriod($firstDay, $lastDay, fn (Carbon $date) => [
+            'completed_at' => $date,
+            'value' => $this->money->make(0)
+        ])->merge(
             $items->groupBy(fn (Transaction $transaction) => $transaction->completed_at->toDateTimeString())
                 ->map(fn (Collection $group, string $completedAt) => [
                     'completed_at' => Carbon::createFromTimeString($completedAt),
