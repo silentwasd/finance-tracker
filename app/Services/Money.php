@@ -6,7 +6,7 @@ use App\Structures\DollarMoney;
 
 class Money
 {
-    public function make(int $value): \App\Structures\Money
+    public function make(float $value): \App\Structures\Money
     {
         return new DollarMoney($value);
     }

@@ -4,14 +4,14 @@ namespace App\Structures;
 
 abstract class Money
 {
-    protected int $value;
+    protected float $value;
 
-    public function __construct(int $value)
+    public function __construct(float $value)
     {
         $this->value = $value;
     }
 
-    public function units(): int
+    public function units(): float
     {
         return $this->value;
     }

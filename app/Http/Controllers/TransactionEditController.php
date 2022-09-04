@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Structures\Money;
 use App\Structures\Month;
 use App\Structures\TransactionType;
+use Illuminate\Support\Facades\Log;
 
 class TransactionEditController extends Controller
 {
@@ -26,7 +27,7 @@ class TransactionEditController extends Controller
     public function update(UpdateTransactionRequest $request, \App\Services\Money $money, Transaction $transaction)
     {
         $transaction->name = $request->input('name');
-        $transaction->value = $money->make(round($request->input('value') * 100, 2));
+        $transaction->value = $money->make(round($request->input('value'), 2) * 100);
         $transaction->category_id = $request->input('category');
         $transaction->completed_at = $request->date('completed_at');
         $transaction->save();
