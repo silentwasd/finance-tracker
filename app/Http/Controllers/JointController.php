@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Services\Chart;
 use App\Structures\Money;
 use App\Structures\Month;
 use App\Structures\TransactionType;
@@ -25,7 +26,7 @@ class JointController extends Controller
         return redirect()->route('joint.index', Str::substr(Str::lower(now()->locale('en')->monthName), 0, 3));
     }
 
-    public function indexByMonth(Month $month)
+    public function indexByMonth(Chart $chart, Month $month)
     {
         $firstDay = new Carbon(new DateTime("first day of $month->name"));
         $lastDay = new Carbon(new DateTime("last day of $month->name"));
@@ -36,9 +37,27 @@ class JointController extends Controller
             ->with('category')
             ->get();
 
+        $days = $chart->makePeriod($firstDay, $lastDay, fn (Carbon $date) => [
+            'completed_at' => $date,
+            'income' => $this->money->make(0),
+            'expense' => $this->money->make(0)
+        ])->merge(
+            $transactions->groupBy(fn (Transaction $transaction) => $transaction->completed_at->toDateTimeString())
+                ->map(fn (Collection $group, string $completedAt) => [
+                    'completed_at' => Carbon::createFromTimeString($completedAt),
+                    'income' => $this->money->make( $group->filter(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Income->value)
+                        ->sum(fn (Transaction $transaction) => $transaction->value->units()) ),
+                    'expense' => $this->money->make( $group->filter(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Expense->value)
+                        ->sum(fn (Transaction $transaction) => $transaction->value->units()) )
+                ])
+        )->values();
+
         return view('joint.index')
             ->with('items', $transactions)
-            ->with('month', $month);
+            ->with('month', $month)
+            ->with('days', $days)
+            ->with('firstDay', $firstDay)
+            ->with('lastDay', $lastDay);
     }
 
     public function balance()
