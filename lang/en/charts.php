@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'chart' => 'Chart'
+    'chart' => 'Chart',
+    'other' => 'Other'
 ];

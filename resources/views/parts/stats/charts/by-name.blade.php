@@ -10,7 +10,7 @@ $small = $money->make( $data->filter(fn ($item) => $item['sum']->units() / $tota
 
 if ($small->units() > 0)
     $items = $items->push([
-        'name' => 'Остальное',
+        'name' => __('charts.other'),
         'sum' => $small
     ]);
 

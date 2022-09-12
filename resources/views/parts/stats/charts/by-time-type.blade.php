@@ -10,7 +10,7 @@
 
     if ($small->units() > 0)
         $items = $items->push([
-            'type' => 'Остальное',
+            'type' => __('charts.other'),
             'sum' => $small
         ]);
 
