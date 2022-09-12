@@ -25,6 +25,14 @@
                 <a href="#table-type" class="list-group-item list-group-item-action">
                     {{ __('tables.by_category') }}
                 </a>
+
+                <a href="#chart-name" class="list-group-item list-group-item-action">
+                    {{ __('charts.chart') }} – {{ __('tables.by_name') }}
+                </a>
+
+                <a href="#chart-time-type" class="list-group-item list-group-item-action">
+                    {{ __('charts.chart') }} – {{ __('tables.by_category_daily') }}
+                </a>
             </div>
         </div>
     </div>
