@@ -38,11 +38,17 @@
 
             @include('parts.stats.general', ['data' => $total])
 
-            @include('parts.stats.by-name', ['data' => $name])
+            @include('parts.stats.tables.by-name', ['data' => $name])
 
-            @include('parts.stats.by-time-type', ['data' => $timeAndType])
+            @include('parts.stats.tables.by-time-type', ['data' => $timeAndType])
 
-            @include('parts.stats.by-type', ['data' => $type])
+            @include('parts.stats.tables.by-type', ['data' => $type])
+
+            <div class="row">
+                @include('parts.stats.charts.by-name', ['data' => $name])
+
+                @include('parts.stats.charts.by-time-type', ['data' => $timeAndType])
+            </div>
 
         </div>
     </div>

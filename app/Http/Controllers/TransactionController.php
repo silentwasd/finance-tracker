@@ -93,6 +93,7 @@ abstract class TransactionController extends Controller
             ->with('type', $this->groupedByType($firstDay, $lastDay))
             ->with('name', $this->groupedByName($firstDay, $lastDay))
             ->with('total', $this->groupedByCompletedTime($firstDay, $lastDay))
+            ->with('money', $this->money)
             ->with('month', $month)
             ->with('title', $this->statsTitle());
     }
