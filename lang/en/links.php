@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'navigation' => 'Navigation',
     'menu' => 'Menu',
     'income' => 'Income',
     'expense' => 'Expense',

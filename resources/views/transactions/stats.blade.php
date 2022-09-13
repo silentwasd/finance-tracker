@@ -44,13 +44,21 @@
     <div class="row">
         <div class="col">
 
-            @include('parts.stats.general', ['data' => $total])
+            <div class="overflow-auto">
+                @include('parts.stats.general', ['data' => $total])
+            </div>
 
-            @include('parts.stats.tables.by-name', ['data' => $name])
+            <div class="overflow-auto">
+                @include('parts.stats.tables.by-name', ['data' => $name])
+            </div>
 
-            @include('parts.stats.tables.by-time-type', ['data' => $timeAndType])
+            <div class="overflow-auto">
+                @include('parts.stats.tables.by-time-type', ['data' => $timeAndType])
+            </div>
 
-            @include('parts.stats.tables.by-type', ['data' => $type])
+            <div class="overflow-auto">
+                @include('parts.stats.tables.by-type', ['data' => $type])
+            </div>
 
             <div class="row">
                 @include('parts.stats.charts.by-name', ['data' => $name])

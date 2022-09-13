@@ -16,7 +16,7 @@
 
 @endphp
 
-<div class="col-6">
+<div class="col-12 col-lg-6">
     <canvas id="chart-time-type" width="400" height="200"></canvas>
 
     <script>

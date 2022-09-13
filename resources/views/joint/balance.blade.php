@@ -34,50 +34,52 @@
     <div class="row">
         <div class="col">
 
-            <table class="table" id="table-total">
-                <caption class="caption-top">{{ __('tables.total') }}</caption>
+            <div class="overflow-auto">
+                <table class="table" id="table-total">
+                    <caption class="caption-top">{{ __('tables.total') }}</caption>
 
-                <tbody>
-                <tr>
-                    <td>{{ __('tables.income') }}</td>
-                    <td>{{ $total['income'] }}</td>
-                </tr>
-
-                <tr>
-                    <td>{{ __('tables.expense') }}</td>
-                    <td>{{ $total['expense'] }}</td>
-                </tr>
-
-                <tr>
-                    <td>{{ __('tables.balance') }}</td>
-                    <td>{{ $total['balance'] }}</td>
-                </tr>
-                </tbody>
-            </table>
-
-            <table class="table" id="table-days">
-                <caption class="caption-top">{{ __('tables.by_days') }}</caption>
-
-                <thead class="table-light sticky-top">
-                <tr>
-                    <td>{{ __('tables.income') }}</td>
-                    <td>{{ __('tables.expense') }}</td>
-                    <td>{{ __('tables.balance') }}</td>
-                    <td>{{ __('tables.date') }}</td>
-                </tr>
-                </thead>
-
-                <tbody>
-                @foreach ($result as $row)
+                    <tbody>
                     <tr>
-                        <td>{{ $row['incomes'] }}</td>
-                        <td>{{ $row['expenses'] }}</td>
-                        <td>{{ $row['balance'] }}</td>
-                        <td>{{ $row['date']->format(config('app.date_format')) }}</td>
+                        <td>{{ __('tables.income') }}</td>
+                        <td>{{ $total['income'] }}</td>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+
+                    <tr>
+                        <td>{{ __('tables.expense') }}</td>
+                        <td>{{ $total['expense'] }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>{{ __('tables.balance') }}</td>
+                        <td>{{ $total['balance'] }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="table" id="table-days">
+                    <caption class="caption-top">{{ __('tables.by_days') }}</caption>
+
+                    <thead class="table-light sticky-top">
+                    <tr>
+                        <td>{{ __('tables.income') }}</td>
+                        <td>{{ __('tables.expense') }}</td>
+                        <td>{{ __('tables.balance') }}</td>
+                        <td>{{ __('tables.date') }}</td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @foreach ($result as $row)
+                        <tr>
+                            <td>{{ $row['incomes'] }}</td>
+                            <td>{{ $row['expenses'] }}</td>
+                            <td>{{ $row['balance'] }}</td>
+                            <td>{{ $row['date']->format(config('app.date_format')) }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
 
             <canvas id="chart-days" width="400" height="200"></canvas>
 

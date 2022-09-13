@@ -16,7 +16,7 @@ if ($small->units() > 0)
 
 @endphp
 
-<div class="col-6">
+<div class="col-12 col-lg-6">
     <canvas id="chart-name" width="400" height="200"></canvas>
 
     <script>
