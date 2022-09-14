@@ -8,6 +8,8 @@ return [
         'name_placeholder' => 'Процент на остаток',
         'transaction_type' => 'Тип транзакции',
         'value' => 'Значение',
+        'check_label' => 'Ссылка на чек',
+        'check_placeholder' => 'Вставьте здесь ссылку из QR кода чека',
         'completed_at' => 'Дата совершения транзакции',
         'category' => 'Категория',
         'category_none' => 'Не выбрана',

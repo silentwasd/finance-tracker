@@ -8,6 +8,8 @@ return [
         'name_placeholder' => 'Matches',
         'transaction_type' => 'Transaction type',
         'value' => 'Value',
+        'check_label' => 'Link to check',
+        'check_placeholder' => 'Paste here link from QR code on the check',
         'completed_at' => 'Completed at',
         'category' => 'Category',
         'category_none' => 'None',

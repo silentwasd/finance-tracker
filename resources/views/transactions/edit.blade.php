@@ -57,6 +57,13 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="check_link" class="form-label">{{ __('forms.transaction.check_label')  }}</label>
+                    <input type="text" class="form-control" id="check_link" name="check_link"
+                           placeholder="{{ __('forms.transaction.check_placeholder') }}"
+                           value="{{ old('check_link') ?? $transaction->check_link }}"/>
+                </div>
+
+                <div class="mb-3">
                     <label for="completed_at" class="form-label">{{ __('forms.transaction.completed_at') }}</label>
                     <input type="date" class="form-control" id="completed_at" name="completed_at"
                            value="{{ old('completed_at') ?? $transaction->completed_at->format('Y-m-d') }}"

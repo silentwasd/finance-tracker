@@ -12,6 +12,7 @@ class UpdateTransactionRequest extends FormRequest
             'name' => 'required|string',
             'category' => 'nullable|int|exists:categories,id',
             'value' => 'required|numeric|min:0',
+            'check_link' => 'nullable|string',
             'completed_at' => 'required|date'
         ];
     }
