@@ -108,4 +108,7 @@ return [
 
     'password_timeout' => 10800,
 
+    'basic_user' => env('AUTH_USER', 'laravel'),
+    'basic_pwd' => env('AUTH_PWD', 'laravel')
+
 ];
