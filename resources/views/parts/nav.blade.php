@@ -14,7 +14,7 @@
 
                     @endphp
                     <a href="{{ route($route) }}"
-                       class="list-group-item list-group-item-action @if (Route::currentRouteName() == (is_array($name) ? $name[0] : $route)) active @endif">
+                       class="list-group-item list-group-item-action @if (Route::currentRouteName() == $activeRoute) active @endif">
                         {{ is_array($name) ? $name[1] : $name }}
                     </a>
                 @endforeach
