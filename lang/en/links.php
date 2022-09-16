@@ -12,5 +12,8 @@ return [
     'categories' => 'Categories',
     'actions' => 'Actions',
     'top' => 'Top',
-    'create' => 'Create'
+    'create' => 'Create',
+
+    'budget' => 'Budget',
+    'budget.monthly-payments' => 'Monthly payments'
 ];
