@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Budget;
 
 use App\Casts\MoneyCast;
-use App\Models\Budget\MonthlyPayment;
+use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Transaction extends Model
+class MonthlyPayment extends Model
 {
+    protected $table = 'budget_monthly_payments';
+
     public $timestamps = false;
 
     protected $casts = [
         'value' => MoneyCast::class,
-        'completed_at' => 'datetime'
+        'will_created_at' => 'datetime'
     ];
 
     public function category(): BelongsTo
@@ -22,8 +24,8 @@ class Transaction extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function monthlyPayment(): HasOne
+    public function createdTransaction(): BelongsTo
     {
-        return $this->hasOne(MonthlyPayment::class, 'created_transaction_id');
+        return $this->belongsTo(Transaction::class);
     }
 }
