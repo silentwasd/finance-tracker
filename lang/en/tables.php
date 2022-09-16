@@ -6,6 +6,7 @@ return [
     'category' => 'Category',
     'value' => 'Value',
     'date' => 'Date',
+    'scheduled_date' => 'Scheduled date',
     'transaction_type' => 'Transaction type',
     'income' => 'Income',
     'expense' => 'Expense',
