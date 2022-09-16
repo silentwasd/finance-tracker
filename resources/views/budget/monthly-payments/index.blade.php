@@ -1,5 +1,24 @@
 @extends('layouts.main', ['title' => 'Бюджет – Ежемесячные платежи'])
 
+@section('side')
+    <div class="row mt-3">
+        <div class="col">
+            <h5>{{ __('links.actions') }}</h5>
+
+            <div class="list-group">
+                <a href="#top" class="list-group-item list-group-item-action">
+                    {{ __('links.top') }}
+                </a>
+
+                <a href="{{ route('budget.monthly-payments.create', ['month' => $month]) }}"
+                   class="list-group-item list-group-item-action">
+                    {{ __('links.create') }}
+                </a>
+            </div>
+        </div>
+    </div>
+@endsection
+
 @section('main')
     <div class="mb-3">
         <x-month-selector :month="$month"></x-month-selector>

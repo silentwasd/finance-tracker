@@ -27,5 +27,19 @@ return [
         'create_button' => 'Create',
         'update_button' => 'Update',
         'delete_button' => 'Delete'
-    ]
+    ],
+
+    'monthly_payment' => [
+        'create_title' => 'Create monthly payment',
+        'edit_title' => 'Edit monthly payment',
+        'name' => 'Name',
+        'name_placeholder' => 'Phone bill',
+        'value' => 'Value',
+        'will_created_at' => 'Will be created at',
+        'category' => 'Category',
+        'category_none' => 'None',
+        'create_button' => 'Create',
+        'update_button' => 'Update',
+        'delete_button' => 'Delete'
+    ],
 ];

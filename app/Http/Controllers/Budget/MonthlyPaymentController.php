@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Budget;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreMonthlyPaymentRequest;
 use App\Models\Budget\MonthlyPayment;
+use App\Services\Money;
 use App\Structures\Month;
 use DateTime;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -35,5 +38,23 @@ class MonthlyPaymentController extends Controller
             ->with('firstDay', $firstDay)
             ->with('lastDay', $lastDay)
             ->with('month', $month);
+    }
+
+    public function create(Request $request)
+    {
+        return view('budget.monthly-payments.create')
+            ->with('will_created_at', $request->query('month') ? new Carbon(new DateTime($request->query('month'))) : now());
+    }
+
+    public function store(StoreMonthlyPaymentRequest $request, Money $money)
+    {
+        $item = new MonthlyPayment();
+        $item->name = $request->input('name');
+        $item->value = $money->make(round($request->input('value'), 2) * 100);
+        $item->will_created_at = $request->date('will_created_at');
+        $item->save();
+
+        //return redirect()->route('budget.monthly-payments.edit', $item->id);
+        return redirect()->route('budget.monthly-payments.index', Month::fromDateTime($item->will_created_at));
     }
 }

@@ -92,6 +92,10 @@ Route::prefix('budget')->name('budget.')->group(function () {
 
     Route::prefix('monthly-payments')->name('monthly-payments.')->group(function () {
 
+        Route::get('create', [MonthlyPaymentController::class, 'create'])->name('create');
+
+        Route::post('store', [MonthlyPaymentController::class, 'store'])->name('store');
+
         Route::get('', [MonthlyPaymentController::class, 'index'])->name('index.default');
 
         Route::get('{month}', [MonthlyPaymentController::class, 'indexByMonth'])->name('index');
