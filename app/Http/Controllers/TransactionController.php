@@ -59,7 +59,7 @@ abstract class TransactionController extends Controller
             'completed_at' => $date,
             'value' => $this->money->make(0)
         ])->merge(
-            $items->groupBy(fn (Transaction $transaction) => $transaction->completed_at->toDateTimeString())
+            $items->groupBy(fn (Transaction $transaction) => $transaction->completed_at->startOfDay()->toDateTimeString())
                 ->map(fn (Collection $group, string $completedAt) => [
                     'completed_at' => Carbon::createFromTimeString($completedAt),
                     'value' => $this->money->make( $group->sum(fn (Transaction $transaction) => $transaction->value->units()) )

@@ -42,7 +42,7 @@ class JointController extends Controller
             'income' => $this->money->make(0),
             'expense' => $this->money->make(0)
         ])->merge(
-            $transactions->groupBy(fn (Transaction $transaction) => $transaction->completed_at->toDateTimeString())
+            $transactions->groupBy(fn (Transaction $transaction) => $transaction->completed_at->startOfDay()->toDateTimeString())
                 ->map(fn (Collection $group, string $completedAt) => [
                     'completed_at' => Carbon::createFromTimeString($completedAt),
                     'income' => $this->money->make( $group->filter(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Income->value)
@@ -82,7 +82,7 @@ class JointController extends Controller
             'balance' => $this->money->make(0),
             'date' => $date
         ])->merge(
-            $transactions->groupBy('completed_at')
+            $transactions->groupBy(fn (Transaction $transaction) => $transaction->completed_at->startOfDay()->toDateTimeString())
                 ->map(function (Collection $row, string $date) {
                     $income = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Income->value) ?? null;
                     $expense = $row->first(fn (Transaction $transaction) => $transaction->transaction_type == TransactionType::Expense->value) ?? null;
