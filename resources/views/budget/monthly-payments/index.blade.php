@@ -42,7 +42,7 @@
                     @foreach ($items as $item)
                         <tr>
                             <td>
-                                <a href="#" class="text-decoration-none">
+                                <a href="{{ route('budget.monthly-payments.edit', $item->id) }}" class="text-decoration-none">
                                     {{ $item->name }}
                                 </a>
                             </td>

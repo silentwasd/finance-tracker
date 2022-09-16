@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Budget;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMonthlyPaymentRequest;
+use App\Http\Requests\UpdateMonthlyPaymentRequest;
 use App\Models\Budget\MonthlyPayment;
+use App\Models\Category;
 use App\Services\Money;
 use App\Structures\Month;
+use App\Structures\TransactionType;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -54,7 +57,36 @@ class MonthlyPaymentController extends Controller
         $item->will_created_at = $request->date('will_created_at');
         $item->save();
 
-        //return redirect()->route('budget.monthly-payments.edit', $item->id);
-        return redirect()->route('budget.monthly-payments.index', Month::fromDateTime($item->will_created_at));
+        return redirect()->route('budget.monthly-payments.edit', $item->id);
+    }
+
+    public function edit(MonthlyPayment $payment)
+    {
+        $categories = Category::where('transaction_type', TransactionType::Expense)
+            ->with('transactions')
+            ->get()
+            ->sortByDesc(fn (Category $category) => count($category->transactions));
+
+        return view('budget.monthly-payments.edit')
+            ->with('payment', $payment)
+            ->with('categories', $categories);
+    }
+
+    public function update(UpdateMonthlyPaymentRequest $request, Money $money, MonthlyPayment $payment)
+    {
+        $payment->name = $request->input('name');
+        $payment->value = $money->make(round($request->input('value'), 2) * 100);
+        $payment->category_id = $request->input('category');
+        $payment->will_created_at = $request->date('will_created_at');
+        $payment->save();
+
+        return redirect()->route('budget.monthly-payments.index', Month::fromDateTime($payment->will_created_at));
+    }
+
+    public function destroy(MonthlyPayment $payment)
+    {
+        $payment->delete();
+
+        return redirect()->route('budget.monthly-payments.index.default');
     }
 }
