@@ -27,7 +27,8 @@ class NavViewComposer
                 'prefix' => 'budget.',
                 'items' => [
                     'monthly-income.index.default' => ['monthly-income.index', __('links.budget.monthly-income')],
-                    'monthly-payments.index.default' => ['monthly-payments.index', __('links.budget.monthly-payments')]
+                    'monthly-payments.index.default' => ['monthly-payments.index', __('links.budget.monthly-payments')],
+                    'plan.index.default' => ['plan.index', __('links.budget.plan')]
                 ]
             ]
         ]);

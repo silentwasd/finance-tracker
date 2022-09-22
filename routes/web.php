@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Budget\MonthlyIncomeController;
 use App\Http\Controllers\Budget\MonthlyPaymentController;
+use App\Http\Controllers\Budget\PlanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
@@ -116,6 +117,14 @@ Route::prefix('budget')->name('budget.')->group(function () {
         Route::get('', [MonthlyIncomeController::class, 'index'])->name('index.default');
 
         Route::get('{month}', [MonthlyIncomeController::class, 'indexByMonth'])->name('index');
+
+    });
+
+    Route::prefix('plan')->name('plan.')->group(function () {
+
+        Route::get('', [PlanController::class, 'index'])->name('index.default');
+
+        Route::get('{month}', [PlanController::class, 'indexByMonth'])->name('index');
 
     });
 

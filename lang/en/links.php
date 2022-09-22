@@ -16,5 +16,6 @@ return [
 
     'budget' => 'Budget',
     'budget.monthly-payments' => 'Monthly payments',
-    'budget.monthly-income' => 'Monthly income'
+    'budget.monthly-income' => 'Monthly income',
+    'budget.plan' => 'Plan'
 ];
