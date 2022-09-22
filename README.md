@@ -71,6 +71,7 @@ All translation files placed in `/lang` directory.
 
 Application use next files:
 
+* `budget.php`
 * `charts.php`
 * `forms.php`
 * `links.php`
