@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Budget\MonthlyIncomeController;
 use App\Http\Controllers\Budget\MonthlyPaymentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpenseController;
@@ -105,6 +106,16 @@ Route::prefix('budget')->name('budget.')->group(function () {
         Route::get('', [MonthlyPaymentController::class, 'index'])->name('index.default');
 
         Route::get('{month}', [MonthlyPaymentController::class, 'indexByMonth'])->name('index');
+
+    });
+
+    Route::prefix('monthly-income')->name('monthly-income.')->group(function () {
+
+        Route::post('update/{month}', [MonthlyIncomeController::class, 'update'])->name('update');
+
+        Route::get('', [MonthlyIncomeController::class, 'index'])->name('index.default');
+
+        Route::get('{month}', [MonthlyIncomeController::class, 'indexByMonth'])->name('index');
 
     });
 
