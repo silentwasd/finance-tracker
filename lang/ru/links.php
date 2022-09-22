@@ -15,5 +15,6 @@ return [
     'create' => 'Создать',
 
     'budget' => 'Бюджет',
-    'budget.monthly-payments' => 'Ежемесячные платежи'
+    'budget.monthly-payments' => 'Ежемесячные платежи',
+    'budget.monthly-income' => 'Ежемесячный доход'
 ];
