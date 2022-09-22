@@ -7,6 +7,7 @@ return [
     'value' => 'Value',
     'date' => 'Date',
     'scheduled_date' => 'Scheduled date',
+    'created_transaction' => 'Created transaction',
     'transaction_type' => 'Transaction type',
     'income' => 'Income',
     'expense' => 'Expense',

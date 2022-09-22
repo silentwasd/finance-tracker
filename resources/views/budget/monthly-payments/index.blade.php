@@ -35,6 +35,7 @@
                         <td>{{ __('tables.category') }}</td>
                         <td>{{ __('tables.value') }}</td>
                         <td>{{ __('tables.scheduled_date') }}</td>
+                        <td>{{ __('tables.created_transaction') }}</td>
                     </tr>
                     </thead>
 
@@ -49,6 +50,15 @@
                             <td>{{ $item->category->name ?? '–' }}</td>
                             <td>{{ $item->value }}</td>
                             <td>{{ $item->will_created_at->format(config('app.date_format')) }}</td>
+                            <td>
+                                @if ($item->created_transaction_id)
+                                    <a href="{{ route('transactions.edit', $item->created_transaction_id) }}">
+                                        {{ $item->created_transaction_id }}
+                                    </a>
+                                @else
+                                    –
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
