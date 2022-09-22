@@ -49,6 +49,17 @@ That's all!
 With simple `php artisan serve` command. It runs
 local PHP server on http://localhost:8000.
 
+# Basic authentication
+
+Application support basic authentication. You need
+to set up environment variables:
+
+```dotenv
+AUTH_ACTIVE=true
+AUTH_USER=user
+AUTH_PWD=pwd
+```
+
 # Customizing
 
 You have some options to customize application.
@@ -60,6 +71,7 @@ All translation files placed in `/lang` directory.
 
 Application use next files:
 
+* `charts.php`
 * `forms.php`
 * `links.php`
 * `month-calendar.php`
