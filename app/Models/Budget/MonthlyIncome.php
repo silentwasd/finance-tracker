@@ -9,6 +9,11 @@ class MonthlyIncome extends Model
 {
     protected $table = 'budget_monthly_income';
 
+    protected $fillable = [
+        'expected_at',
+        'value'
+    ];
+
     public $timestamps = false;
 
     protected $casts = [

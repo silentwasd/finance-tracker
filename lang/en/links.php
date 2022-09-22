@@ -15,5 +15,6 @@ return [
     'create' => 'Create',
 
     'budget' => 'Budget',
-    'budget.monthly-payments' => 'Monthly payments'
+    'budget.monthly-payments' => 'Monthly payments',
+    'budget.monthly-income' => 'Monthly income'
 ];

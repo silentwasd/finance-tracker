@@ -42,4 +42,9 @@ return [
         'update_button' => 'Update',
         'delete_button' => 'Delete'
     ],
+
+    'monthly_income' => [
+        'value' => 'Value',
+        'set_button' => 'Set'
+    ],
 ];
