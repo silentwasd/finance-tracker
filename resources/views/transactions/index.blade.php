@@ -43,6 +43,7 @@
                         <td>{{ __('tables.category') }}</td>
                         <td>{{ __('tables.value') }}</td>
                         <td>{{ __('tables.date') }}</td>
+                        <td>{{ __('tables.in_budget') }}</td>
                     </tr>
                     </thead>
 
@@ -57,6 +58,15 @@
                             <td>{{ $item->category->name ?? '–' }}</td>
                             <td>{{ $item->value }}</td>
                             <td>{{ $item->completed_at->format(config('app.date_format')) }}</td>
+                            <td>
+                                @if ($item->monthlyPayment)
+                                    <a href="{{ route('budget.monthly-payments.edit', $item->monthlyPayment->id) }}">
+                                        {{ $item->monthlyPayment->id }}
+                                    </a>
+                                @else
+                                    –
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -52,7 +52,7 @@ abstract class TransactionController extends Controller
             ->orderBy('completed_at')
             ->where('completed_at', '>=', $firstDay)
             ->where('completed_at', '<=', $lastDay)
-            ->with('category')
+            ->with(['category', 'monthlyPayment'])
             ->get();
 
         $days = $chart->makePeriod($firstDay, $lastDay, fn (Carbon $date) => [
