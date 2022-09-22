@@ -42,4 +42,9 @@ return [
         'update_button' => 'Обновить',
         'delete_button' => 'Удалить'
     ],
+
+    'monthly_income' => [
+        'value' => 'Значение',
+        'set_button' => 'Установить'
+    ],
 ];

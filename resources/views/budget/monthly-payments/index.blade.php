@@ -1,4 +1,4 @@
-@extends('layouts.main', ['title' => 'Бюджет – Ежемесячные платежи'])
+@extends('layouts.main', ['title' => __('links.budget.monthly-payments')])
 
 @section('side')
     <div class="row mt-3">
