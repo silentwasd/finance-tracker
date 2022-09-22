@@ -10,7 +10,7 @@
             <div class="bg-success text-white rounded p-3">
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-arrow-up"></span>
-                    <span>Income</span>
+                    <span>{{ __('budget.income') }}</span>
                 </div>
                 <p class="m-0 h1 fw-bold">{{ $income }}</p>
             </div>
@@ -20,7 +20,7 @@
             <div class="bg-danger text-white rounded p-3">
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-arrow-down"></span>
-                    <span>Payments</span>
+                    <span>{{ __('budget.payments') }}</span>
                 </div>
                 <p class="m-0 h1 fw-bold">{{ $payments }}</p>
             </div>
@@ -30,7 +30,7 @@
             <div class="bg-light border rounded p-3">
                 <div class="d-flex align-items-center gap-2">
                     <span class="fa fa-balance-scale"></span>
-                    <span>Balance</span>
+                    <span>{{ __('budget.balance') }}</span>
                 </div>
                 <p class="m-0 h1 fw-bold">{{ $balance }}</p>
             </div>
