@@ -12,5 +12,8 @@ return [
     'categories' => 'Категории',
     'actions' => 'Действия',
     'top' => 'Наверх',
-    'create' => 'Создать'
+    'create' => 'Создать',
+
+    'budget' => 'Бюджет',
+    'budget.monthly-payments' => 'Ежемесячные платежи'
 ];

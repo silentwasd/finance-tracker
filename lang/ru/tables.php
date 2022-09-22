@@ -6,6 +6,9 @@ return [
     'category' => 'Категория',
     'value' => 'Значение',
     'date' => 'Дата',
+    'scheduled_date' => 'Запланированная дата',
+    'created_transaction' => 'Созданная транзакция',
+    'in_budget' => 'В бюджете',
     'transaction_type' => 'Тип транзакции',
     'income' => 'Доход',
     'expense' => 'Расход',
@@ -27,5 +30,6 @@ return [
     'by_category_daily' => 'По категории (учет по дням)',
     'income_categories' => 'Категории дохода',
     'expense_categories' => 'Категории расхода',
-    'transaction_count' => 'Кол-во транзакций'
+    'transaction_count' => 'Кол-во транзакций',
+    'category_none' => 'Нет'
 ];

@@ -27,5 +27,19 @@ return [
         'create_button' => 'Создать',
         'update_button' => 'Обновить',
         'delete_button' => 'Удалить'
-    ]
+    ],
+
+    'monthly_payment' => [
+        'create_title' => 'Создать ежемесячный платеж',
+        'edit_title' => 'Изменить ежемесячный платеж',
+        'name' => 'Наименование',
+        'name_placeholder' => 'Интернет',
+        'value' => 'Значение',
+        'will_created_at' => 'Запланированная дата транзакции',
+        'category' => 'Категория',
+        'category_none' => 'Не выбрана',
+        'create_button' => 'Создать',
+        'update_button' => 'Обновить',
+        'delete_button' => 'Удалить'
+    ],
 ];

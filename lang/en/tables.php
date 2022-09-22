@@ -31,7 +31,5 @@ return [
     'income_categories' => 'Income categories',
     'expense_categories' => 'Expense categories',
     'transaction_count' => 'Transaction count',
-    'category_none' => 'None',
-    'yes' => 'Yes',
-    'no' => 'No'
+    'category_none' => 'None'
 ];
