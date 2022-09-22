@@ -9,12 +9,12 @@ class BasicAuthenticationMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+        if (!config('auth.basic_active'))
+            return $next($request);
+
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
             header('WWW-Authenticate: Basic realm="My Realm"');
-            header('HTTP/1.0 401 Unauthorized');
-            echo 'Текст, отправляемый в том случае,
-    если пользователь нажал кнопку Cancel';
-            exit;
+            abort(401);
         }
 
         if ($_SERVER['PHP_AUTH_USER'] == config('auth.basic_user') &&
