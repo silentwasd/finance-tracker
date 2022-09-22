@@ -16,5 +16,6 @@ return [
 
     'budget' => 'Бюджет',
     'budget.monthly-payments' => 'Ежемесячные платежи',
-    'budget.monthly-income' => 'Ежемесячный доход'
+    'budget.monthly-income' => 'Ежемесячный доход',
+    'budget.plan' => 'План'
 ];
